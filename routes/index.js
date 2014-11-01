@@ -10,6 +10,11 @@ router.get('/helloworld',function(req,res){
 	res.render('helloworld',{title: 'Hello, World!'})
 });
 
+router.post('/sendsms',function(req,res){
+	var textBody = req.body.Body;
+	res.send(textBody);
+})
+
 router.get('/sms',function(req,res){
 	var client = require('twilio')('ACe2cfa86a5ecd532993d2ef687178c134','806a24e78fdacab45ebfc72960f1f1a4');
 
