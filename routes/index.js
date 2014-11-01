@@ -12,7 +12,10 @@ router.get('/helloworld',function(req,res){
 
 router.post('/sendsms',function(req,res){
 	var textBody = req.body.Body;
-	res.send(textBody);
+	twiml.message(textBody);
+
+	res.type('text/xml');
+    res.send(twiml.toString());
 })
 
 router.get('/sms',function(req,res){
