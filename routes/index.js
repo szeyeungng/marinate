@@ -10,19 +10,20 @@ router.get('/helloworld',function(req,res){
 	res.render('helloworld',{title: 'Hello, World!'})
 });
 
-router.get('/sendsms',function(req,res){
-	var textBody = req.body.Body;
-
-	console.log(textBody);
-})
+//router.get('/sendsms',function(req,res){
+//	var textBody = req.body.Body;
+//
+//	console.log(textBody);
+//})
 
 router.get('/sms',function(req,res){
 	var client = require('twilio')('ACe2cfa86a5ecd532993d2ef687178c134','806a24e78fdacab45ebfc72960f1f1a4');
+	var textBody = req.body.Body;
 
 	client.sendMessage({
 		to:'+16502835564',
 		from:'+16503005260',
-		body:'Hi!'
+		body:textBody
 	});
 });
 
