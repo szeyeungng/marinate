@@ -24,7 +24,7 @@ router.post('/sms',function(req,res){
 		to:'+16502835564',
 		from:'+16503005260',
 		body:'Hi' + textBody
-	});\
+	});
 });
 
 router.get('/userlist', function(req, res) {
