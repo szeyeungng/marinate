@@ -23,8 +23,8 @@ router.post('/sms',function(req,res){
 	client.sendMessage({
 		to:'+16502835564',
 		from:'+16503005260',
-		body:'Hi' + req.body
-	});
+		body:'Hi' + textBody
+	});\
 });
 
 router.get('/userlist', function(req, res) {
