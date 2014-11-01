@@ -16,7 +16,7 @@ router.get('/helloworld',function(req,res){
 //	console.log(textBody);
 //})
 
-router.get('/sms',function(req,res){
+router.post('/sms',function(req,res){
 	var client = require('twilio')('ACe2cfa86a5ecd532993d2ef687178c134','806a24e78fdacab45ebfc72960f1f1a4');
 	var textBody = req.body.Body;
 
