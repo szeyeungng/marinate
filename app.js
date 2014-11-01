@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 // New Code
 var mongo = require('mongodb');
 var monk = require('monk');
-var db = monk('localhost:27017/textblogger');
+var db = monk('textblogger.herokuapp.com:27017/textblogger');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
