@@ -23,7 +23,7 @@ router.get('/sms',function(req,res){
 	client.sendMessage({
 		to:'+16502835564',
 		from:'+16503005260',
-		body:'Hi'
+		body:'Hi '+textBody
 	});
 });
 
