@@ -17,7 +17,7 @@ var db = mongojs.connect(uri,["usercollection"]);*/
 var mango = require('mangodb');
 var mangoUri = process.env.MONGOLAB_URI || 'mongodb://localhost/mydb';
 
-db = mango.Db.connect(mongoUri);
+var db = mango.Db.connect(mongoUri);
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
