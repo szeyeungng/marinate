@@ -13,22 +13,30 @@ router.get('/helloworld',function(req,res){
 router.post('/sms',function(req,res){
 	var client = require('twilio')('ACe2cfa86a5ecd532993d2ef687178c134','806a24e78fdacab45ebfc72960f1f1a4');
 	var textBody = req.body.Body;
+	var db = req.db;
 
     client.sendMessage({
 		to:'+16502835564',
 		from:'+16503005260',
 		body:'Hi' + textBody
 	});
+
+	db.usercollection.save(usercollection,function (err,textBody){
+        res.writeHead(200,{
+            'Content-Type':'application/json;charset=utf-8'
+        });
+        res.end(JSON.stringify(textBody));
+    });
 });
 
 router.get('/userlist', function(req, res) {
     var db = req.db;
-    var collection = db.get('usercollection');
-    //console.log("helloworld");
-    collection.find({},{},function(e,docs){
-        res.render('userlist', {
-            "userlist" : docs
+
+    db.usercollection.find(function (err,usercollection){
+        res.writeHead(200,{
+            'Content-Type':'application/json;charset=utf-8'
         });
+        res.end(JSON.stringify(usercollection));
     });
 });
 
