@@ -5,14 +5,15 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-// New Code
-var mongo = require('mongodb');
-var monk = require('monk');
-var db = monk('localhost:27017/textblogger');
+// local mongodb code
+//var mongo = require('mongodb');
+//var monk = require('monk');
+//var db = monk('localhost:27017/textblogger');
 
 // mongodb://heroku_app31160796:glmm7krnr12he4tgrejb43ioaf@ds049150.mongolab.com:49150/heroku_app31160796
-//var uri = process.env.MONGOLAB_URI;
-//var db = mongodb.connect(uri,["usercollection"]);
+var mongojs = require("mongojs");
+var uri = "mongodb://szeyeungng:Password123!@ds049170.mongolab.com:49170/textblogger";
+var db = mongojs.connect(uri,["usercollection"]);
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
