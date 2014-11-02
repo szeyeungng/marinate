@@ -7,12 +7,12 @@ var bodyParser = require('body-parser');
 
 // New Code
 var mongo = require('mongodb');
-//var monk = require('monk');
-//var db = monk('localhost:27017/textblogger');
+var monk = require('monk');
+var db = monk('localhost:27017/textblogger');
 
 // mongodb://heroku_app31160796:glmm7krnr12he4tgrejb43ioaf@ds049150.mongolab.com:49150/heroku_app31160796
-var uri = process.env.MONGOLAB_URI;
-var db = mongodb.connect(uri,["usercollection"]);
+//var uri = process.env.MONGOLAB_URI;
+//var db = mongodb.connect(uri,["usercollection"]);
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
