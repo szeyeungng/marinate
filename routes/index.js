@@ -20,13 +20,13 @@ router.post('/sms',function(req,res){
 	db.usercollection.insert({'phoneNumber':textFrom,'entry':textBody});
 
     client.sendMessage({
-		to:  textFrom,
+		to: textFrom,
 		from:'+16503005260',
 		body:'Blog post from ' + textFrom + ' sent on ' + textDate + ' with content: ' + textBody
 	});
 });
 
-router.get('/userlist', function(req, res) {
+router.get('/entries', function(req, res) {
     var db = req.db;
 
     db.usercollection.find(function (err,usercollection){
