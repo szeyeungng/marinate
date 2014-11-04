@@ -20,7 +20,7 @@ router.post('/sms',function(req,res){
 	db.usercollection.insert({'phoneNumber':textFrom,'entry':textBody});
 
     client.sendMessage({
-		to:'+16502835564',
+		to: textFrom,
 		from:'+16503005260',
 		body:'Blog post from ' + textFrom + ' sent on ' + textDate + ' with content: ' + textBody
 	});
