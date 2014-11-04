@@ -15,6 +15,9 @@ router.post('/sms',function(req,res){
 	var textBody = req.body.Body;
 	var textDate = req.body.DateSent;
 	var textFrom = req.body.From;
+	var db = req.db;
+
+	db.usercollection.insert({'phoneNumber':textFrom,'entry':textBody});
 
     client.sendMessage({
 		to:'+16502835564',
