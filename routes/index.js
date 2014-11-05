@@ -13,16 +13,17 @@ router.get('/helloworld',function(req,res){
 router.post('/sms',function(req,res){
 	var client = require('twilio')('ACe2cfa86a5ecd532993d2ef687178c134','806a24e78fdacab45ebfc72960f1f1a4');
 	var textBody = req.body.Body;
-	Date textDate = req.body.DateSent;
+	var textDate = req.body.DateSent;
 	var textFrom = req.body.From;
 
 	var db = req.db;
 
-	db.usercollection.insert({'phoneNumber':textFrom,'entry':textBody,'dateSent':textDate});
+	db.usercollection.insert({'phoneNumber':textFrom,'entry':textBody});
 
     client.sendMessage({
 		to: textFrom,
 		from:'+16503005260',
+		//mediaUrl: 'https://scontent-a-sea.xx.fbcdn.net/hphotos-xap1/v/t1.0-9/561400_10100493073429917_1453659309_n.jpg?oh=7f31a85ef408e7e5d778e1a8db4b9b59&oe=54AACAE6',
 		body:'Entry from ' + textFrom + ' with content: ' + textBody
 	});
 });
@@ -30,7 +31,7 @@ router.post('/sms',function(req,res){
 router.get('/entries', function(req, res) {
     var db = req.db;
 
-    db.usercollection.find({'phoneNumber':'+16502835564'},{'dateSent':1,'entry':1,'_id':0},function (err,usercollection){
+    db.usercollection.find({'phoneNumber':'+16502835564'},{'entry':1,'_id':0},function (err,usercollection){
         res.writeHead(200,{
             'Content-Type':'application/json;charset=utf-8'
         });
