@@ -14,7 +14,6 @@ router.post('/sms',function(req,res){
 	var client = require('twilio')('ACe2cfa86a5ecd532993d2ef687178c134','806a24e78fdacab45ebfc72960f1f1a4');
 	var textBody = req.body.Body;
 	var textFrom = req.body.From;
-	var senderID = req.body.senderID;
 
 	var db = req.db;
 
@@ -24,16 +23,16 @@ router.post('/sms',function(req,res){
 		client.sendMessage({
 			to: textFrom,
 			from: '+16503005260',
-			body: 'http://textblogger.herokuapp.com/entries?'+senderID
+			body: 'http://textblogger.herokuapp.com/entries?'+textFrom
 		})
+	}else{
+	    client.sendMessage({
+			to: textFrom,
+			from:'+16503005260',
+			//mediaUrl: 'https://scontent-a-sea.xx.fbcdn.net/hphotos-xap1/v/t1.0-9/561400_10100493073429917_1453659309_n.jpg?oh=7f31a85ef408e7e5d778e1a8db4b9b59&oe=54AACAE6',
+			body:'Entry from ' + textFrom + ' with content: ' + textBody
+		})	
 	}
-
-    client.sendMessage({
-		to: textFrom,
-		from:'+16503005260',
-		//mediaUrl: 'https://scontent-a-sea.xx.fbcdn.net/hphotos-xap1/v/t1.0-9/561400_10100493073429917_1453659309_n.jpg?oh=7f31a85ef408e7e5d778e1a8db4b9b59&oe=54AACAE6',
-		body:'Entry from ' + textFrom + ' with content: ' + textBody
-	});
 });
 
 router.get('/entries', function(req, res) {
