@@ -15,7 +15,7 @@ router.post('/sms',function(req,res){
 	var textBody = req.body.Body;
 	var textDate = req.body.DateSent;
 	var textFrom = req.body.From;
-	var textImg = req.mediaUrl;
+	var textImg = req.body.mediaUrl;
 
 	var db = req.db;
 
