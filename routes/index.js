@@ -15,6 +15,8 @@ router.post('/sms',function(req,res){
 	var textBody = req.body.Body;
 	var textDate = req.body.DateSent;
 	var textFrom = req.body.From;
+	var textImg = req.mediaUrl;
+
 	var db = req.db;
 
 	db.usercollection.insert({'phoneNumber':textFrom,'entry':textBody});
@@ -22,7 +24,8 @@ router.post('/sms',function(req,res){
     client.sendMessage({
 		to: textFrom,
 		from:'+16503005260',
-		body:'Blog post from ' + textFrom + ' sent on ' + textDate + ' with content: ' + textBody
+		body:'Blog post from ' + textFrom + ' sent on ' + textDate + ' with content: ' + textBody,
+		mediaUrl: textImg
 	});
 });
 
