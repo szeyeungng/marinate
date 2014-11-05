@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-//var S = require('string');
+var S = require('string');
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -14,7 +14,9 @@ router.get('/helloworld',function(req,res){
 router.post('/sms',function(req,res){
 	var client = require('twilio')('ACe2cfa86a5ecd532993d2ef687178c134','806a24e78fdacab45ebfc72960f1f1a4');
 	var textBody = req.body.Body;
-	var textFrom = req.body.From;
+	var textFromPre = req.body.From;
+
+	var textFrom = S(textFromPre).strip('+').s;
 
 	var db = req.db;
 
