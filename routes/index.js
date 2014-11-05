@@ -17,7 +17,6 @@ router.post('/sms',function(req,res){
 
 	var db = req.db;
 
-	db.usercollection.insert({'phoneNumber':textFrom,'entry':textBody,'date':new Date()});
 
 	if (textBody == "URL"){
 		client.sendMessage({
@@ -31,12 +30,15 @@ router.post('/sms',function(req,res){
 			from:'+16503005260',
 			//mediaUrl: 'https://scontent-a-sea.xx.fbcdn.net/hphotos-xap1/v/t1.0-9/561400_10100493073429917_1453659309_n.jpg?oh=7f31a85ef408e7e5d778e1a8db4b9b59&oe=54AACAE6',
 			body:'Entry from ' + textFrom + ' with content: ' + textBody
-		})	
+		})
+
+		db.usercollection.insert({'phoneNumber':textFrom,'entry':textBody,'date':new Date()});
 	}
 });
 
 router.get('/entries', function(req, res) {
     var db = req.db;
+
 
     db.usercollection.find({'phoneNumber':'+16502835564'},{'date':1,'entry':1,'_id':0},function (err,usercollection){
         res.writeHead(200,{
