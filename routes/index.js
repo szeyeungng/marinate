@@ -13,12 +13,20 @@ router.get('/helloworld',function(req,res){
 router.post('/sms',function(req,res){
 	var client = require('twilio')('ACe2cfa86a5ecd532993d2ef687178c134','806a24e78fdacab45ebfc72960f1f1a4');
 	var textBody = req.body.Body;
-	var textDate = req.body.DateSent;
 	var textFrom = req.body.From;
+	var senderID = req.body.senderID;
 
 	var db = req.db;
 
 	db.usercollection.insert({'phoneNumber':textFrom,'entry':textBody,'date':new Date()});
+
+	if (textBody == "URL"){
+		client.sendMessage({
+			to: textFrom,
+			from: '+16503005260',
+			body: 'http://textblogger.herokuapp.com/entries?'+senderID
+		})
+	}
 
     client.sendMessage({
 		to: textFrom,
