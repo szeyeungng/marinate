@@ -15,6 +15,7 @@ router.post('/sms',function(req,res){
 	var textBody = req.body.Body;
 	var textDate = req.body.DateSent;
 	var textFrom = req.body.From;
+	var textImg = req.body.MediaUrl;
 
 	var db = req.db;
 
@@ -23,6 +24,7 @@ router.post('/sms',function(req,res){
     client.sendMessage({
 		to: textFrom,
 		from:'+16503005260',
+		mediaUrl: textImg,
 		body:'Blog post from ' + textFrom + ' sent on ' + textDate + ' with content: ' + textBody
 	});
 });
