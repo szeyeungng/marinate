@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var S = require('string');
 
 /* GET home page. */
 router.get('/', function(req, res) {
@@ -13,10 +14,10 @@ router.get('/helloworld',function(req,res){
 router.post('/sms',function(req,res){
 	var client = require('twilio')('ACe2cfa86a5ecd532993d2ef687178c134','806a24e78fdacab45ebfc72960f1f1a4');
 	var textBody = req.body.Body;
-	var textFrom = req.body.From;
+	var textFromPre = req.body.From;
 
 	var db = req.db;
-
+	var textFrom = (textFromPre).strip('+').s;
 
 	if (textBody == "URL"){
 		client.sendMessage({
@@ -38,7 +39,6 @@ router.post('/sms',function(req,res){
 
 router.get('/entries', function(req, res) {
     var db = req.db;
-
 
     db.usercollection.find({'phoneNumber':'+16502835564'},{'date':1,'entry':1,'_id':0},function (err,usercollection){
         res.writeHead(200,{
