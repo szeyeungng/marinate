@@ -15,7 +15,6 @@ router.post('/sms',function(req,res){
 	var textBody = req.body.Body;
 	var textDate = req.body.DateSent;
 	var textFrom = req.body.From;
-	var textImg = req.body.MediaUrl;
 
 	var db = req.db;
 
@@ -24,7 +23,7 @@ router.post('/sms',function(req,res){
     client.sendMessage({
 		to: textFrom,
 		from:'+16503005260',
-		mediaUrl: textImg,
+		mediaUrl: 'https://scontent-a-sea.xx.fbcdn.net/hphotos-xap1/v/t1.0-9/561400_10100493073429917_1453659309_n.jpg?oh=7f31a85ef408e7e5d778e1a8db4b9b59&oe=54AACAE6',
 		body:'Blog post from ' + textFrom + ' sent on ' + textDate + ' with content: ' + textBody
 	});
 });
