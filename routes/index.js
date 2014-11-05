@@ -22,7 +22,7 @@ router.post('/sms',function(req,res){
 
 	if (textBody == "URL"){
 		client.sendMessage({
-			to: textFrom,
+			to: textFromPre,
 			from: '+16503005260',
 			body: 'http://textblogger.herokuapp.com/entries?'+textFrom
 		})
