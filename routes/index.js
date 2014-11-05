@@ -14,9 +14,11 @@ router.get('/helloworld',function(req,res){
 router.post('/sms',function(req,res){
 	var client = require('twilio')('ACe2cfa86a5ecd532993d2ef687178c134','806a24e78fdacab45ebfc72960f1f1a4');
 	var textBody = req.body.Body;
+	
+	//string stuff
 	var textFromPre = req.body.From;
-
 	var textFrom = S(textFromPre).strip('+').s;
+	//end of string stuff
 
 	var db = req.db;
 
@@ -24,11 +26,11 @@ router.post('/sms',function(req,res){
 		client.sendMessage({
 			to: textFromPre,
 			from: '+16503005260',
-			body: 'http://textblogger.herokuapp.com/entries?'+textFrom
+			body: 'http://textblogger.herokuapp.com/entries?phone='+textFrom
 		})
 	}else{
 	    client.sendMessage({
-			to: textFrom,
+			to: textFromPre,
 			from:'+16503005260',
 			//mediaUrl: 'https://scontent-a-sea.xx.fbcdn.net/hphotos-xap1/v/t1.0-9/561400_10100493073429917_1453659309_n.jpg?oh=7f31a85ef408e7e5d778e1a8db4b9b59&oe=54AACAE6',
 			body:'Entry from ' + textFrom + ' with content: ' + textBody
@@ -40,8 +42,9 @@ router.post('/sms',function(req,res){
 
 router.get('/entries', function(req, res) {
     var db = req.db;
+    var param = req.param('phone');
 
-    db.usercollection.find({'phoneNumber':'+16502835564'},{'date':1,'entry':1,'_id':0},function (err,usercollection){
+    db.usercollection.find({'phoneNumber':param},{'date':1,'entry':1,'_id':0},function (err,usercollection){
         res.writeHead(200,{
             'Content-Type':'application/json;charset=utf-8'
         });
