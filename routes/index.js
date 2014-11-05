@@ -18,7 +18,7 @@ router.post('/sms',function(req,res){
 
 	var db = req.db;
 
-	db.usercollection.insert({'phoneNumber':textFrom,'entry':textBody},{$currentDate:{date:true}});
+	db.usercollection.insert({'phoneNumber':textFrom,'entry':textBody},{$currentDate:{'date':{$type:'timestamp'}}});
 
     client.sendMessage({
 		to: textFrom,
