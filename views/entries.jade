@@ -1,8 +1,5 @@
 extends layout
 
 block content
-    h1.
-        Entries
-    ul
-        each entry, i in entries
-            li
+	each entry in entries
+		p #{entry.entry}

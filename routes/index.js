@@ -44,11 +44,10 @@ router.get('/entries', function(req, res) {
     var db = req.db;
     var param = req.param('phone');
 
-    db.usercollection.find({'phoneNumber':param},{'date':1,'entry':1,'_id':0},function (err,usercollection){
-        res.writeHead(200,{
-            'Content-Type':'application/json;charset=utf-8'
-        });
-        res.end(JSON.stringify(usercollection));
+    //db.collection('usercollection').find({'phoneNumber':param},{'date':1,'entry':1,'_id':0},function (err,usercollection){
+    db.collection('usercollection').find({'phoneNumber':param},{'date':1,'entry':1,'_id':0}).toArray(function (err,usercollection){
+        res.render('entries',{entries:usercollection});
+        console.log(usercollection);
     });
 });
 
