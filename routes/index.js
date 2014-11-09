@@ -7,10 +7,6 @@ router.get('/', function(req, res) {
   res.render('index', { title: 'Express' });
 });
 
-router.get('/helloworld',function(req,res){
-	res.render('helloworld',{title: 'Hello, World!'})
-});
-
 router.post('/sms',function(req,res){
 	var client = require('twilio')('ACe2cfa86a5ecd532993d2ef687178c134','806a24e78fdacab45ebfc72960f1f1a4');
 	var textBody = req.body.Body;
@@ -36,7 +32,7 @@ router.post('/sms',function(req,res){
 			body:'Entry from ' + textFrom + ' with content: ' + textBody
 		})
 
-		db.usercollection.insert({'phoneNumber':textFrom,'entry':textBody,'date':new Date()});
+		db.entries.insert({'phoneNumber':textFrom,'entry':textBody,'date':new Date()});
 	}
 });
 
@@ -45,9 +41,9 @@ router.get('/entries', function(req, res) {
     var param = req.param('phone');
 
     //db.collection('usercollection').find({'phoneNumber':param},{'date':1,'entry':1,'_id':0},function (err,usercollection){
-    db.collection('usercollection').find({'phoneNumber':param},{'date':1,'entry':1,'_id':0}).toArray(function (err,usercollection){
-        res.render('entries',{entries:usercollection});
-        console.log(usercollection);
+    db.collection('entries').find({'phoneNumber':param},{'date':1,'entry':1,'_id':0}).toArray(function (err,entries){
+        res.render('entries',{entries:entries});
+        console.log(entries);
     });
 });
 
