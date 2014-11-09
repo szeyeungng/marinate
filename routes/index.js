@@ -10,13 +10,10 @@ router.get('/', function(req, res) {
 router.post('/sms',function(req,res){
 	var client = require('twilio')('ACe2cfa86a5ecd532993d2ef687178c134','806a24e78fdacab45ebfc72960f1f1a4');
 	var textBody = req.body.Body;
-	
-	//string stuff
 	var textFromPre = req.body.From;
 	var textFrom = S(textFromPre).strip('+').s;
-	//end of string stuff
 
-	var db = req.db;
+	var collection = req.db.collection('entries');
 
 	if (textBody == "URL"){
 		client.sendMessage({
@@ -40,7 +37,7 @@ router.post('/sms',function(req,res){
 			}
 		});
 
-		db.collection('entries').insert({
+		collection.insert({
 			'phoneNumber':textFrom,
 			'entry':textBody,
 			'date':new Date()
@@ -56,10 +53,10 @@ router.post('/sms',function(req,res){
 });
 
 router.get('/entries', function(req, res) {
-    var db = req.db;
+    var collection = req.db.collection('entries');
     var param = req.param('phone');
 
-    db.collection('entries').find({
+    collection.find({
     	'phoneNumber':param},
     	{'date':1,'entry':1,'_id':0
     }).toArray(function (err,entries){
