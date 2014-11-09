@@ -23,16 +23,36 @@ router.post('/sms',function(req,res){
 			to: textFromPre,
 			from: '+16503005260',
 			body: 'http://textblogger.herokuapp.com/entries?phone='+textFrom
-		})
-	}else{
+		}, function(err,responseData){
+			if (err){
+				console.log("Error sending text message");
+			}
+		}
+	)}
+	else {
 	    client.sendMessage({
 			to: textFromPre,
 			from:'+16503005260',
-			//mediaUrl: 'https://scontent-a-sea.xx.fbcdn.net/hphotos-xap1/v/t1.0-9/561400_10100493073429917_1453659309_n.jpg?oh=7f31a85ef408e7e5d778e1a8db4b9b59&oe=54AACAE6',
 			body:'Entry from ' + textFrom + ' with content: ' + textBody
-		})
+		}, function(err,responseData){
+			if (err){
+				console.log("Error sending text message");
+			}
+		}
+	)
 
-		db.entries.insert({'phoneNumber':textFrom,'entry':textBody,'date':new Date()});
+		db.entries.insert({
+			'phoneNumber':textFrom,
+			'entry':textBody,
+			'date':new Date()
+		}, function (err, doc){
+			if (err) {
+				console.log("There was a problem adding your entry to the database.");
+			}
+			else {
+				console.log("Successfully added your entry to the database.");
+			}
+		});
 	}
 });
 
@@ -40,16 +60,23 @@ router.get('/entries', function(req, res) {
     var db = req.db;
     var param = req.param('phone');
 
-    //db.collection('usercollection').find({'phoneNumber':param},{'date':1,'entry':1,'_id':0},function (err,usercollection){
-    db.collection('entries').find({'phoneNumber':param},{'date':1,'entry':1,'_id':0}).toArray(function (err,entries){
-        res.render('entries',{entries:entries});
-        console.log(entries);
+    db.collection('entries').find({
+    	'phoneNumber':param},
+    	{'date':1,'entry':1,'_id':0
+    }).toArray(function (err,entries){
+    	if (err) {
+    		console.log("error retrieving your entries.");
+    	}
+    	else {
+    		res.render('entries',{entries:entries});
+        	console.log(entries);
+    	}
     });
 });
 
 /* GET New User page. */
-router.get('/newuser',function(req,res){
-	res.render('newuser',{title:'Add New User'});
+router.get('/signup',function(req,res){
+	res.render('signup',{title:'Signup'});
 });
 
 /* POST to Add User Service */
