@@ -27,8 +27,8 @@ router.post('/sms',function(req,res){
 			if (err){
 				console.log("Error sending text message");
 			}
-		}
-	)}
+		});
+	}
 	else {
 	    client.sendMessage({
 			to: textFromPre,
@@ -38,10 +38,9 @@ router.post('/sms',function(req,res){
 			if (err){
 				console.log("Error sending text message");
 			}
-		}
-	)
+		});
 
-		db.entries.insert({
+		db.collection('entries').insert({
 			'phoneNumber':textFrom,
 			'entry':textBody,
 			'date':new Date()
