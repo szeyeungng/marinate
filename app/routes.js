@@ -65,7 +65,14 @@ module.exports = function(app, passport) {
                 }
             });
 
-            Entry.insert({
+            var newEntry            = new Entry();
+
+            // set the user's local credentials
+            newEntry.phoneNumber    = textFrom;
+            newEntry.entry = textBody;
+            newEntry.date = new Date();
+            
+            /*Entry.save({
                 'phoneNumber':textFrom,
                 'entry':textBody,
                 'date':new Date()
@@ -76,7 +83,7 @@ module.exports = function(app, passport) {
                 else {
                     console.log("Successfully added your entry to the database.");
                 }
-            });
+            });*/
         }
     });
 
