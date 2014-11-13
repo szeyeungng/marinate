@@ -22,7 +22,7 @@ module.exports = function(app, passport) {
 
     app.get('/entries', function(req, res) {
         var param = req.param('phone');
-     
+
         Entry.find({
             'phoneNumber':param},
             {'date':1,'entry':1,'_id':0
@@ -65,7 +65,7 @@ module.exports = function(app, passport) {
                 }
             });
 
-            /*Entry.insert({
+            Entry.insert({
                 'phoneNumber':textFrom,
                 'entry':textBody,
                 'date':new Date()
@@ -76,7 +76,7 @@ module.exports = function(app, passport) {
                 else {
                     console.log("Successfully added your entry to the database.");
                 }
-            });*/
+            });
         }
     });
 
