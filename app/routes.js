@@ -60,7 +60,7 @@ module.exports = function(app, passport) {
             client.sendMessage({
                 to: textFromPre,
                 from:'+16503005260',
-                body:'Entry from ' + textFrom + ' with content: ' + textBody
+                body:'Entry from ' + textFrom + ' with content: ' + textBody,
                 mediaUrl: mediaBody
             }, function(err,responseData){
                 if (err){
