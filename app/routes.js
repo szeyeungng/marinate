@@ -1,4 +1,5 @@
 var Entry = require('../app/models/entry');
+var S = require('string');
 // app/routes.js
 module.exports = function(app, passport) {
 
