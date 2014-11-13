@@ -54,8 +54,7 @@ module.exports = function(app, passport) {
                 }
             });
         }
-        else {
-            var newEntry = new Entry();
+        else {           
             client.sendMessage({
                 to: textFromPre,
                 from:'+16503005260',
@@ -66,29 +65,20 @@ module.exports = function(app, passport) {
                 }
             });
 
-            // set the user's local credentials
+            var newEntry = new Entry();
+            
             newEntry.phoneNumber = textFrom;
             newEntry.entry = textBody;
             newEntry.date = new Date();
 
             newEntry.save(function(err) {
-                if (err)
-                    throw err;
-                return done(null, newEntry);
+                if(!err){
+                    console.log("saved");
+                } else {
+                    console.log("could not save :(");
+                }
             });
             
-            /*Entry.save({
-                'phoneNumber':textFrom,
-                'entry':textBody,
-                'date':new Date()
-            }, function (err, doc){
-                if (err) {
-                    console.log("There was a problem adding your entry to the database.");
-                }
-                else {
-                    console.log("Successfully added your entry to the database.");
-                }
-            });*/
         }
     });
 
