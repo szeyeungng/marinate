@@ -55,6 +55,7 @@ module.exports = function(app, passport) {
             });
         }
         else {
+            var newEntry = new Entry();
             client.sendMessage({
                 to: textFromPre,
                 from:'+16503005260',
@@ -65,10 +66,8 @@ module.exports = function(app, passport) {
                 }
             });
 
-            var newEntry            = new Entry();
-
             // set the user's local credentials
-            newEntry.phoneNumber    = textFrom;
+            newEntry.phoneNumber = textFrom;
             newEntry.entry = textBody;
             newEntry.date = new Date();
             
