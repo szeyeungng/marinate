@@ -43,7 +43,7 @@ module.exports = function(app, passport) {
         var textFromPre = req.body.From;
         var textFrom = S(textFromPre).strip('+').s;
         var mediaBody = req.body.mediaUrl;
-        var mediaType = req.payload.MediaContentType;
+        //var mediaType = req.body.MediaContentType;
 
         if (textBody == "URL"){
             client.sendMessage({
@@ -64,6 +64,12 @@ module.exports = function(app, passport) {
             }, function(err,responseData){
                 if (err){
                     console.log("Error sending text message");
+                } else {
+                    download = request(mediaBody).pipe(fs.createWriteStream("/public/images"));
+
+                    download.on('finish',function(){
+                        request(mediaBody).save("./public/images");
+                    })
                 }
             });
 
