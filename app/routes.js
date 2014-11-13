@@ -49,7 +49,7 @@ module.exports = function(app, passport) {
             client.sendMessage({
                 to: textFromPre,
                 from: '+16503005260',
-                body: 'http://textblogger.herokuapp.com/entries?phone='+textFrom +MediaContentType
+                body: 'http://textblogger.herokuapp.com/entries?phone='+textFrom
             }, function(err,responseData){
                 if (err){
                     console.log("Error sending text message");
@@ -60,7 +60,7 @@ module.exports = function(app, passport) {
             client.sendMessage({
                 to: textFromPre,
                 from:'+16503005260',
-                body:'Entry from ' + textFrom + ' with content: ' + textBody
+                body:'Entry from ' + textFrom + ' with content: ' + textBody + mediaType
             }, function(err,responseData){
                 if (err){
                     console.log("Error sending text message");
