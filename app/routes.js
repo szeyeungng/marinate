@@ -42,7 +42,7 @@ module.exports = function(app, passport) {
         var textBody = req.body.Body;
         var textFromPre = req.body.From;
         var textFrom = S(textFromPre).strip('+').s;
-        var mediaBody = req.body.mediaUrl;
+        //var mediaBody = req.body.mediaUrl;
         //var mediaType = req.body.MediaContentType;
 
         if (textBody == "URL"){
@@ -61,7 +61,7 @@ module.exports = function(app, passport) {
                 to: textFromPre,
                 from:'+16503005260',
                 body:'Entry from ' + textFrom + ' with content: ' + textBody,
-                mediaUrl: mediaBody
+                mediaUrl: req.body.mediaUrl
             }, function(err,responseData){
                 if (err){
                     console.log("Error sending text message");
