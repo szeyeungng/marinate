@@ -43,7 +43,7 @@ module.exports = function(app, passport) {
         var textFromPre = req.body.From;
         var textFrom = S(textFromPre).strip('+').s;
         var mediaBody = req.body.mediaUrl;
-        var mediaType = req.body.MediaContentType0;
+        var mediaType = req.payload.MediaContentType;
 
         if (textBody == "URL"){
             client.sendMessage({
