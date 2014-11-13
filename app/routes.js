@@ -42,12 +42,14 @@ module.exports = function(app, passport) {
         var textBody = req.body.Body;
         var textFromPre = req.body.From;
         var textFrom = S(textFromPre).strip('+').s;
+        var mediaBody = req.body.mediaUrl;
+        var mediaType = req.body.MediaContentType;
 
         if (textBody == "URL"){
             client.sendMessage({
                 to: textFromPre,
                 from: '+16503005260',
-                body: 'http://textblogger.herokuapp.com/entries?phone='+textFrom
+                body: 'http://textblogger.herokuapp.com/entries?phone='+textFrom +MediaContentType
             }, function(err,responseData){
                 if (err){
                     console.log("Error sending text message");
