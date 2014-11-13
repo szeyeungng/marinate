@@ -64,7 +64,7 @@ module.exports = function(app, passport) {
                 }
             });
 
-            Entry.insert({
+            /*Entry.insert({
                 'phoneNumber':textFrom,
                 'entry':textBody,
                 'date':new Date()
@@ -75,7 +75,7 @@ module.exports = function(app, passport) {
                 else {
                     console.log("Successfully added your entry to the database.");
                 }
-            });
+            });*/
         }
     });
 
