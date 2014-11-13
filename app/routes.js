@@ -60,16 +60,11 @@ module.exports = function(app, passport) {
             client.sendMessage({
                 to: textFromPre,
                 from:'+16503005260',
-                body:'Entry from ' + textFrom + ' with content: ' + textBody + mediaType
+                body:'Entry from ' + textFrom + ' with content: ' + textBody
+                mediaUrl: mediaBody
             }, function(err,responseData){
                 if (err){
                     console.log("Error sending text message");
-                } else {
-                    download = request(mediaBody).pipe(fs.createWriteStream("/public/images"));
-
-                    download.on('finish',function(){
-                        request(mediaBody).save("./public/images");
-                    })
                 }
             });
 
