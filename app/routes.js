@@ -43,7 +43,7 @@ module.exports = function(app, passport) {
         var textBody = req.body.Body;
         var textFromPre = req.body.From;
         var textFrom = S(textFromPre).strip('+').s;
-        //var mediaBody = req.body.mediaUrl;
+        var mediaBody = req.body.mediaUrl;
         //var mediaType = req.body.MediaContentType;
 
         if (textBody == "URL"){
@@ -69,9 +69,9 @@ module.exports = function(app, passport) {
             });
 
             request({
-                url:'http://www.cedynamix.fr/wp-content/uploads/Tux/Tux-G2.png',
+                url:mediaBody,
                 encoding: 'binary'
-            }, function(err,body){
+            }, function(err,res,body){
                 if (!err){
                     body = new Buffer(body, 'binary');
 
