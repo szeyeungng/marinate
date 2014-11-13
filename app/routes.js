@@ -70,6 +70,12 @@ module.exports = function(app, passport) {
             newEntry.phoneNumber = textFrom;
             newEntry.entry = textBody;
             newEntry.date = new Date();
+
+            newEntry.save(function(err) {
+                if (err)
+                    throw err;
+                return done(null, newEntry);
+            });
             
             /*Entry.save({
                 'phoneNumber':textFrom,
