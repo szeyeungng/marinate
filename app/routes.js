@@ -65,7 +65,7 @@ module.exports = function(app, passport) {
                 }
             });
 
-            Entry.create({
+            Entry.insert({
                 'phoneNumber':textFrom,
                 'entry':textBody,
                 'date':new Date()
