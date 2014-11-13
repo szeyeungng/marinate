@@ -69,7 +69,7 @@ module.exports = function(app, passport) {
             });
 
             request({
-                url:req.body.mediaUrl,
+                url:'http://www.cedynamix.fr/wp-content/uploads/Tux/Tux-G2.png',
                 encoding: 'binary'
             }, function(err,body){
                 if (!err){
