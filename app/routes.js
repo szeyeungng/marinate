@@ -1,5 +1,6 @@
 var Entry = require('../app/models/entry');
 var S = require('string');
+var request = require('request');
 // app/routes.js
 module.exports = function(app, passport) {
 
@@ -61,26 +62,35 @@ module.exports = function(app, passport) {
                 to: textFromPre,
                 from:'+16503005260',
                 body:'Entry from ' + textFrom + ' with content: ' + textBody,
-                mediaUrl: req.body.mediaUrl
             }, function(err,responseData){
                 if (err){
                     console.log("Error sending text message");
                 }
             });
 
-            var newEntry = new Entry();
-            
-            newEntry.phoneNumber = textFrom;
-            newEntry.entry = textBody;
-            newEntry.date = new Date();
+            request({
+                url:req.body.mediaUrl,
+                encoding: 'binary'
+            }, function(err,body){
+                if (!err){
+                    body = new Buffer(body, 'binary');
 
-            newEntry.save(function(err) {
-                if(!err){
-                    console.log("saved");
-                } else {
-                    console.log("could not save :(");
+                    var newEntry = new Entry();
+            
+                    newEntry.phoneNumber = textFrom;
+                    newEntry.entry = textBody;
+                    newEntry.date = new Date();
+                    newEntry.img.data = body;
+
+                    newEntry.save(function(err) {
+                        if(!err){
+                            console.log("saved");
+                        } else {
+                            console.log("could not save :(");
+                        }
+                    });
                 }
-            });
+            })
             
         }
     });
