@@ -10,14 +10,13 @@
     </style>
 </head>
 <body>
-<div
-</body>
-<table>
+
 <% for(var i=0; i < entries.length; i++) { %>
-   <tr>
-     <td><%= entries[i].entry %></td>
-     <td><%= entries[i].date %></td>
-   </tr>
+    <div><%= entries[i].entry %></div>
+    <!--<div><%= entries[i].date %></div>-->
+    <% if (entries[i].imgUrl != null) {%>
+        <div><img src='<%= entries[i].imgUrl %>' style='width:50%;height:50%' /></div>
+    <% } %>
 <% } %>
-</table>
+</body>
 </html>

@@ -8,7 +8,7 @@ var entrySchema = mongoose.Schema({
     phoneNumber  : String,
     entry        : String,
     date	     : Date,
-    img		     : {data: Buffer, contentType:String}
+    imgUrl	     : String
 
 },{collection:'entries'});
 

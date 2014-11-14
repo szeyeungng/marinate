@@ -26,7 +26,7 @@ module.exports = function(app, passport) {
 
         Entry.find({
             'phoneNumber':param},
-            {'date':1,'entry':1,'_id':0
+            {'date':1,'entry':1,'imgUrl':1,'_id':0
         }).lean().exec(function (err,entries){
             if (err) {
                 console.log("error retrieving your entries.");
@@ -43,8 +43,7 @@ module.exports = function(app, passport) {
         var textBody = req.body.Body;
         var textFromPre = req.body.From;
         var textFrom = S(textFromPre).strip('+').s;
-        var mediaBody = req.body.mediaUrl;
-        //var mediaType = req.body.MediaContentType;
+        var mediaBody = req.body.MediaUrl0;
 
         if (textBody == "URL"){
             client.sendMessage({
@@ -68,20 +67,39 @@ module.exports = function(app, passport) {
                 }
             });
 
-            request({
-                url:'http://www.cedynamix.fr/wp-content/uploads/Tux/Tux-G2.png',
+            var newEntry = new Entry();
+            console.log(req.body.MediaUrl0);
+            console.log(req.body.MediaContentType0);
+    
+            newEntry.phoneNumber = textFrom;
+            newEntry.entry = textBody;
+            newEntry.date = new Date();
+            newEntry.imgUrl = mediaBody;
+
+            newEntry.save(function(err) {
+                if(!err){
+                    console.log("saved");
+                } else {
+                    console.log("could not save :(");
+                }
+            });
+
+            /*request({
+                url:req.body.MediaUrl0,
                 encoding: 'binary'
             }, function(err,res,body){
                 if (!err){
                     body = new Buffer(body, 'binary');
 
                     var newEntry = new Entry();
+                    console.log(req.body.MediaUrl0);
+                    console.log(req.body.MediaContentType0);
             
                     newEntry.phoneNumber = textFrom;
                     newEntry.entry = textBody;
                     newEntry.date = new Date();
                     newEntry.img.data = body;
-                    newEntry.img.contentType = 'image/png';
+                    newEntry.img.contentType = 'image/jpeg';
 
                     newEntry.save(function(err) {
                         if(!err){
@@ -91,7 +109,7 @@ module.exports = function(app, passport) {
                         }
                     });
                 }
-            })
+            })*/
             
         }
     });
