@@ -6,6 +6,10 @@ var LocalStrategy   = require('passport-local').Strategy;
 // load up the user model
 var User            = require('../app/models/user');
 
+var bcrypt   = require('bcrypt-nodejs');
+var S = require('string');
+
+
 // expose this function to our app using module.exports
 module.exports = function(passport) {
 
@@ -44,6 +48,14 @@ module.exports = function(passport) {
         // asynchronous
         // User.findOne wont fire unless data is sent back
         process.nextTick(function() {
+            var phoneNumber = req.body.phonenumber;
+            var phoneHash = bcrypt.hashSync(phoneNumber, bcrypt.genSaltSync(8), null);
+            var phoneCode = S(phoneHash).truncate(7,'x').s;
+
+            var phoneCodeEntered = req.body.phonecode;
+
+            console.log(phoneCodeEntered);
+            console.log(phoneCode);
 
             // find a user whose email is the same as the forms email
             // we are checking to see if the user trying to login already exists
@@ -51,7 +63,9 @@ module.exports = function(passport) {
                 // if there are any errors, return the error
                 if (err)
                     return done(err);
-
+                if (!(phoneCode===phoneCodeEntered)){
+                    return done(null,false,req.flash('signupMessage','That code you entered is invalid.'));
+                }
                 // check to see if theres already a user with that email
                 if (user) {
                     return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
@@ -64,6 +78,8 @@ module.exports = function(passport) {
                     // set the user's local credentials
                     newUser.email    = email;
                     newUser.password = newUser.generateHash(password);
+                    // may need to pass phoneNumber as part of the passport
+                    newUser.phoneNumber = phoneNumber;
 
                     // save the user
                     newUser.save(function(err) {

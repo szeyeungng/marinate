@@ -21,8 +21,16 @@
         <div class="alert alert-danger"><%= message %></div>
     <% } %>
 
-    <!-- LOGIN FORM -->
-    <form action="/signup" method="post">
+    <!-- SIGNUP FORM -->
+    <form action="/sendcode" method="post" name="sendcode">
+        <div class="form-group">
+            <label>Phone Number</label>
+            <input type="text" class="form-control" name="phonenumber">
+        </div>
+        <button type="submit" class="btn btn-warning btn-lg">Send Code</button>
+    </form>
+
+    <form action="/signup" method="post" name="signup">
         <div class="form-group">
             <label>Email</label>
             <input type="text" class="form-control" name="email">
@@ -31,7 +39,14 @@
             <label>Password</label>
             <input type="password" class="form-control" name="password">
         </div>
-
+        <div class="form-group">
+            <label>Phone Number</label>
+            <input type="phoneNumber" class="form-control" name="phonenumber">
+        </div>
+        <div class="form-group">
+            <label>Verification Code</label>
+            <input type="phoneCode" class="form-control" name="phonecode">
+        </div>
         <button type="submit" class="btn btn-warning btn-lg">Signup</button>
     </form>
 
