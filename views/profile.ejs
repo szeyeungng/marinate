@@ -2,7 +2,7 @@
 <!doctype html>
 <html>
 <head>
-    <title>Node Authentication</title>
+    <title>Profile - <%= user.email %></title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <style>
@@ -13,14 +13,23 @@
 <div class="container">
 
     <div class="page-header text-center">
-        <h1><span class="fa fa-anchor"></span> Profile Page</h1>
+        <h1><span></span> Profile - <%= user.email %></h1>
         <a href="/logout" class="btn btn-default btn-sm">Logout</a>
     </div>
 
     <div class="row">
 
+    <!--entries-->
+    <% for(var i=0; i < entries.length; i++) { %>
+        <div><%= entries[i].entry %></div>
+        <!--<div><%= entries[i].date %></div>-->
+        <% if (entries[i].imgUrl != null) {%>
+            <div><img src='<%= entries[i].imgUrl %>' style='width:50%;height:50%' /></div>
+        <% } %>
+    <% } %>
+
         <!-- LOCAL INFORMATION -->
-        <div class="col-sm-6">
+        <!--<div class="col-sm-6">
             <div class="well">
                 <h3><span class="fa fa-user"></span> Local</h3>
 
@@ -32,7 +41,7 @@
                     </p>
 
             </div>
-        </div>
+        </div>-->
 
     </div>
 

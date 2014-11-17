@@ -24,7 +24,7 @@ module.exports = function(app, passport) {
         res.render('login.ejs', { message: req.flash('loginMessage') }); 
     });
 
-    app.get('/entries', function(req, res) {
+    /*app.get('/entries', function(req, res) {
         var param = req.param('phone');
 
         Entry.find({
@@ -39,7 +39,7 @@ module.exports = function(app, passport) {
                 res.render('entries.ejs',{entries:entries});
             }
         });
-    });
+    });*/
 
     /*app.get('/images', function(req,res){
         Entry.find({"imgBody.contentType":"image/jpeg"},function(err,image){
@@ -60,7 +60,7 @@ module.exports = function(app, passport) {
             twilio.sendMessage({
                 to: textFromPre,
                 from: '+16503005260',
-                body: 'http://textblogger.herokuapp.com/entries?phone='+textFrom
+                body: 'http://textblogger.herokuapp.com'
             }, function(err,responseData){
                 if (err){
                     console.log("Error sending text message");
@@ -68,7 +68,7 @@ module.exports = function(app, passport) {
             });
         }
         else {           
-            twilio.sendMessage({
+            /*twilio.sendMessage({
                 to: textFromPre,
                 from:'+16503005260',
                 body:'Entry from ' + textFrom + ' with content: ' + textBody,
@@ -76,7 +76,7 @@ module.exports = function(app, passport) {
                 if (err){
                     console.log("Error sending text message");
                 }
-            });
+            });*/
 
             var newEntry = new Entry();
 
@@ -186,7 +186,7 @@ module.exports = function(app, passport) {
             }
             else {
                 console.log(entries);
-                res.render('entries.ejs',{entries:entries});
+                res.render('profile.ejs',{entries:entries,user:req.user});
             }
         });
         //res.render('profile.ejs', { user : req.user }); // get the user out of session and pass to template
