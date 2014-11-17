@@ -2,8 +2,9 @@ var Entry = require('../app/models/entry');
 var S = require('string');
 //var fs = require('fs');
 //var request = require('request');
-var bcrypt   = require('bcrypt-nodejs');
+//var bcrypt   = require('bcrypt-nodejs');
 var twilio = require('twilio')('ACe2cfa86a5ecd532993d2ef687178c134','806a24e78fdacab45ebfc72960f1f1a4');
+var md5 = require('MD5');
 // app/routes.js
 module.exports = function(app, passport) {
 
@@ -68,7 +69,7 @@ module.exports = function(app, passport) {
             });
         }
         else {           
-            /*twilio.sendMessage({
+            twilio.sendMessage({
                 to: textFromPre,
                 from:'+16503005260',
                 body:'Entry from ' + textFrom + ' with content: ' + textBody,
@@ -76,7 +77,7 @@ module.exports = function(app, passport) {
                 if (err){
                     console.log("Error sending text message");
                 }
-            });*/
+            });
 
             var newEntry = new Entry();
 
@@ -157,8 +158,12 @@ module.exports = function(app, passport) {
 
         // post-MVP, add a datetime to this hash for added randomness; but when being compared,
         // the compare function's hash has to use same timestamp
-        var phoneHash = bcrypt.hashSync(phoneNumber, bcrypt.genSaltSync(8), null);
-        var phoneCode = S(phoneHash).truncate(7,'x').s;
+        //var phoneHash = bcrypt.hashSync(phoneNumber, null);
+        var phoneHash = md5(phoneNumber);
+        var phoneCode = phoneHash.substr(6,6);
+
+        console.log(phoneHash);
+        console.log(phoneCode);
 
         twilio.sendMessage({
             to:phoneNumber,

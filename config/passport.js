@@ -6,7 +6,8 @@ var LocalStrategy   = require('passport-local').Strategy;
 // load up the user model
 var User            = require('../app/models/user');
 
-var bcrypt   = require('bcrypt-nodejs');
+//var bcrypt   = require('bcrypt-nodejs');
+var md5 = require('MD5');
 var S = require('string');
 
 
@@ -49,11 +50,13 @@ module.exports = function(passport) {
         // User.findOne wont fire unless data is sent back
         process.nextTick(function() {
             var phoneNumber = req.body.phonenumber;
-            var phoneHash = bcrypt.hashSync(phoneNumber, bcrypt.genSaltSync(8), null);
-            var phoneCode = S(phoneHash).truncate(7,'x').s;
+            //var phoneHash = bcrypt.hashSync(phoneNumber, null);
+            var phoneHash = md5(phoneNumber);
+            var phoneCode = phoneHash.substr(6,6);
 
             var phoneCodeEntered = req.body.phonecode;
 
+            console.log(phoneHash);
             console.log(phoneCodeEntered);
             console.log(phoneCode);
 
