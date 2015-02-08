@@ -2,15 +2,16 @@
 <!doctype html>
 <html>
 <head>
-    <title>Profile - <%= user.email %></title>
+    <title>Capsoul - <%= user.email %></title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    <link rel="shortcut icon" type="image/png" href="http://icons.iconarchive.com/icons/banzaitokyo/medico/16/capsule-icon.png"/>
     <style>
     </style>
 </head>
 <body>
 <!-- nav bar -->
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -19,7 +20,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/">Capsule</a>
+      <a class="navbar-brand">Capsoul</a>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -34,7 +35,7 @@
 </nav>
 
 <!-- main content -->
-<div class="container">
+<div style="padding-top:70px" class="container">
 
     <!--<div class="page-header text-center">
         <h1><span></span> Profile - <%= user.email %></h1>
@@ -45,13 +46,17 @@
 
     <!--entries-->
     <% for(var i=0; i < entries.length; i++) { %>
-        <div><%= entries[i].entry %></div>
+        <!--<div class="well well-lg"><%= entries[i].entry %></div>-->
+        <blockquote>
+          <p><%= entries[i].entry %></p>
+          <small>posted <cite title="Source Title"><%= entries[i].date %></cite></small>
+        </blockquote>
         <!--<div><%= entries[i].date %></div>-->
         <% if (entries[i].imgUrl != null) {%>
-            <div><img src='<%= entries[i].imgUrl %>' style='width:50%;height:50%' /></div>
+            <div><img src='<%= entries[i].imgUrl %>' style='width:100%;height:100%' /></div>
         <% } %>
     <% } %>
-    
+
         <!-- LOCAL INFORMATION -->
         <!--<div class="col-sm-6">
             <div class="well">
