@@ -2,19 +2,43 @@
 <!doctype html>
 <html>
 <head>
-    <title>Node Authentication</title>
+    <title>Capsule - Sign up</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
     <style>
-        body        { padding-top:80px; }
     </style>
 </head>
 <body>
+<!-- nav bar -->
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Capsule</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/signup">Sign up</a></li>
+        <li><a href="/login">Log in</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- page content -->
 <div class="container">
 
 <div class="col-sm-6 col-sm-offset-3">
 
-    <h1><span class="fa fa-sign-in"></span> Signup</h1>
+    <h1>Sign up</h1>
 
     <!-- show any messages that come back with authentication -->
     <% if (message.length > 0) { %>
@@ -50,13 +74,11 @@
         <button type="submit" class="btn btn-warning btn-lg">Signup</button>
     </form>
 
-    <hr>
-
-    <p>Already have an account? <a href="/login">Login</a></p>
-    <p>Or go <a href="/">home</a>.</p>
+    <div style="padding-bottom:80px"></div>
 
 </div>
 
 </div>
+
 </body>
 </html>
