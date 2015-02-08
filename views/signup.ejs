@@ -27,7 +27,7 @@
       <ul class="nav navbar-nav">
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="/signup">Sign up</a></li>
+        <li class="active"><a href="/signup">Sign up</a></li>
         <li><a href="/login">Log in</a></li>
       </ul>
     </div>
@@ -37,9 +37,7 @@
 <!-- page content -->
 <div style="padding-top:70px" class="container">
 
-<div class="col-sm-6 col-sm-offset-3">
-
-    <h1>Sign up</h1>
+<div class="form-horizontal">
 
     <!-- show any messages that come back with authentication -->
     <% if (message.length > 0) { %>
@@ -52,7 +50,7 @@
             <label>Phone Number</label>
             <input type="text" class="form-control" name="phonenumber">
         </div>
-        <button type="submit" class="btn btn-warning btn-lg">Send Code</button>
+        <button type="submit" class="btn btn-primary">Send Code</button>
     </form>
 
     <form action="/signup" method="post" name="signup">
@@ -72,7 +70,7 @@
             <label>Verification Code</label>
             <input type="phoneCode" class="form-control" name="phonecode">
         </div>
-        <button type="submit" class="btn btn-warning btn-lg">Signup</button>
+        <button type="submit" class="btn btn-primary">Sign up</button>
     </form>
 
     <div style="padding-bottom:80px"></div>

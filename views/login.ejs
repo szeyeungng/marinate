@@ -27,16 +27,14 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="/signup">Sign up</a></li>
-        <li><a href="/login">Log in</a></li>
+        <li class="active"><a href="/login">Log in</a></li>
       </ul>
     </div>
   </div>
 </nav>
 
 <div style="padding-top:70px" class="container">
-<div class="col-sm-6 col-sm-offset-3">
-
-    <h1>Log in</h1>
+<div class="form-horizontal">
 
     <!-- show any messages that come back with authentication -->
     <% if (message.length > 0) { %>
@@ -54,7 +52,7 @@
             <input type="password" class="form-control" name="password">
         </div>
 
-        <button type="submit" class="btn btn-warning btn-lg">Login</button>
+        <button type="submit" class="btn btn-primary">Login</button>
     </form>
 
 </div>
