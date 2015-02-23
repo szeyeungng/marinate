@@ -3,12 +3,13 @@
 var mongoose = require('mongoose');
 
 // define the schema for our user model
-var entrySchema = mongoose.Schema({
+var capsuleSchema = mongoose.Schema({
 
+    capsule  	 : String,
     entry        : String,
     date	     : Date
 
-},{collection:'entry'});
+},{collection:'capsule'});
 
 // create the model for users and expose it to our app
-module.exports = mongoose.model('Entry', entrySchema);
+module.exports = mongoose.model('Capsule', capsuleSchema);

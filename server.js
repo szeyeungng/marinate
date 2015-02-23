@@ -13,7 +13,7 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 
 // configuration =========================================
-mongoose.connect('mongodb://szeyeungng:Password123!@ds049170.mongolab.com:49170/textblogger');
+mongoose.connect('mongodb://szeyeungng:Password123!@ds047581.mongolab.com:47581/capsuul');
 
 require('./config/passport')(passport); // pass passport for configuration
 
