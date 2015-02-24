@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 // define the schema for our user model
 var capsuleSchema = mongoose.Schema({
 
-    capsule  	 : String,
+    name    	 : String,
     entry        : String,
     date	     : Date
 
