@@ -1,12 +1,13 @@
-<!-- views/profile.ejs -->
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Capsuul - <%= user.email %></title>
+<title>Capsuul - <%= user.email %></title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <!-- Latest compiled and minified JavaScript -->
     <link rel="shortcut icon" type="image/png" href="http://chathamkentweddingshow.com/wp-content/themes/website/data/img/favicon/c.png"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> 
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <style>
     </style>
 </head>
@@ -41,10 +42,38 @@
 
   <!-- This link should pop-up create menu -->
   <div style="padding-top:20px">
-    <a href="">New Capsule</a>
+    <a data-toggle="modal" data-target="#exampleModal" >New Capsule</a>
   </div>
 
 </div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">Capsuul</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="capsuul-name" class="control-label">Capsuul:</label>
+            <input type="text" class="form-control" id="capsuul-name">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="control-label">Recipients:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Send message</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div style="padding-top:50px" class="container">
 
     <!--<div class="page-header text-center">
