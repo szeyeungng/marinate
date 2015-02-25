@@ -12,6 +12,7 @@
     </style>
 </head>
 <body>
+
 <!-- nav bar -->
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
@@ -36,44 +37,46 @@
   </div>
 </nav>
 
-<!-- main content -->
+<!-- Sidebar -->
 <div style="height:100vh;padding-top:50px;background-color:lightgray" class="col-sm-3 col-md-2 sidebar">
   <!-- INSERT iterative code to search DB for Capsules here -->
 
   <!-- This link should pop-up create menu -->
   <div style="padding-top:20px">
-    <a data-toggle="modal" data-target="#exampleModal" >New Capsule</a>
+    <a style="cursor:pointer" data-toggle="modal" data-target="#exampleModal" >New Capsule</a>
   </div>
 
 </div>
 
+<!-- Modal Dialog -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="exampleModalLabel">Capsuul</h4>
+        <h4 class="modal-title" id="exampleModalLabel">New Capsule</h4>
       </div>
       <div class="modal-body">
         <form>
           <div class="form-group">
-            <label for="capsuul-name" class="control-label">Capsuul:</label>
+            <label for="capsuul-name" class="control-label">Capsule name</label>
             <input type="text" class="form-control" id="capsuul-name">
           </div>
           <div class="form-group">
-            <label for="message-text" class="control-label">Recipients:</label>
+            <label for="message-text" class="control-label">Invite friends</label>
             <textarea class="form-control" id="message-text"></textarea>
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Send message</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary">Create</button>
       </div>
     </div>
   </div>
 </div>
 
+<!-- Main content -->
 <div style="padding-top:50px" class="container">
 
     <!--<div class="page-header text-center">
