@@ -1,14 +1,14 @@
-// app/models/user.js
+// app/models/capsule.js
 // load the things we need
 var mongoose = require('mongoose');
 
 // define the schema for our user model
 var capsuleSchema = mongoose.Schema({
 
-    name    	 : String,
-    entry        : String,
-    date	     : Date,
-    email        : String
+    capsuleName  : String,
+    date 		 : Date,
+    creator		 : String,
+    invitee		 : String
 
 },{collection:'capsule'});
 

@@ -69,6 +69,26 @@ module.exports = function(app, passport) {
         //console.log(req.user.phoneNumber);
     });
 
+    app.post('/newcapsule',function(req,res){
+        var newCapsule = new Capsule();
+
+        newCapsule.capsuleName = req.capsuleName;
+        newCapsule.date = new Date();
+        newCapsule.creator = req.user.email;
+        newCapsule.invitee = req.invitee;
+
+        newCapsule.save(function(err) {
+            if(!err){
+                console.log("saved");
+            } else {
+                console.log("could not save :(");
+            }
+        });
+
+        res.redirect('/profile');
+        res.render('profile.ejs',{user:req.user});
+    });
+
     // =====================================
     // LOGOUT ==============================
     // =====================================

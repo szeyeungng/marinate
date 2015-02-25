@@ -1,4 +1,4 @@
-// app/models/user.js
+// app/models/entry.js
 // load the things we need
 var mongoose = require('mongoose');
 
