@@ -73,6 +73,8 @@ module.exports = function(app, passport) {
         newCapsule.creator = req.user.email;
         newCapsule.invitee = req.invitee;
 
+        console.log(req);
+
         newCapsule.save(function(err) {
             if(!err){
                 console.log("saved");
@@ -82,7 +84,6 @@ module.exports = function(app, passport) {
         });
 
         res.redirect('/profile');
-        res.render('profile.ejs',{user:req.user});
     });
 
     // =====================================
