@@ -68,10 +68,10 @@ module.exports = function(app, passport) {
     app.post('/newcapsule',function(req,res){
         var newCapsule = new Capsule();
 
-        newCapsule.capsuleName = req.capsuleName;
+        newCapsule.capsuleName = req.body.capsuleName;
         newCapsule.date = new Date();
         newCapsule.creator = req.user.email;
-        newCapsule.invitee = req.invitee;
+        newCapsule.invitee = req.body.invitee;
 
         console.log(req);
 
