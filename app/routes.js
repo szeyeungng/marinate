@@ -50,23 +50,19 @@ module.exports = function(app, passport) {
     // we will want this protected so you have to be logged in to visit
     // we will use route middleware to verify this (the isLoggedIn function)
     app.get('/profile', isLoggedIn, function(req, res) {
-        res.render('profile.ejs',{user:req.user});
-        //UPDATE THIS
-        /*Entry.find({
-            'phoneNumber':req.user.phoneNumber},
-            {'date':1,'entry':1,'imgUrl':1,'_id':0
-        }).lean().exec(function (err,entries){
+        Capsule.find({
+            'creator':req.user.email},
+            {'creator':1,'date':1,'_id':0
+        }).lean().exec(function (err,capsule){
             if (err) {
-                console.log("error retrieving your entries.");
+                console.log("error retrieving your capsules.");
             }
             else {
-                console.log(entries);
-                res.render('profile.ejs',{entries:entries,user:req.user});
+                console.log(capsule);
+                res.render('profile.ejs',{capsule:capsule,user:req.user});
             }
-        });*/
-        //res.render('profile.ejs', { user : req.user }); // get the user out of session and pass to template
-
-        //console.log(req.user.phoneNumber);
+        });
+        //res.render('profile.ejs',{user:req.user});
     });
 
     app.post('/newcapsule',function(req,res){

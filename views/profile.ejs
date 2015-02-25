@@ -40,6 +40,9 @@
 <!-- Sidebar -->
 <div style="height:100vh;padding-top:50px;background-color:lightgray" class="col-sm-3 col-md-2 sidebar">
   <!-- INSERT iterative code to search DB for Capsules here -->
+    <% for(var i=0; i < capsule.length; i++) { %>
+          <p><%= capsule[i].creator %></p>
+    <% } %>
 
   <!-- This link should pop-up create menu -->
   <div style="padding-top:20px">
