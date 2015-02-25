@@ -52,7 +52,7 @@ module.exports = function(app, passport) {
     app.get('/profile', isLoggedIn, function(req, res) {
         Capsule.find({
             'creator':req.user.email},
-            {'creator':1,'date':1,'_id':0
+            {'capsuleName':1,'creator':1,'invitee':1,'date':1,'_id':1
         }).lean().exec(function (err,capsule){
             if (err) {
                 console.log("error retrieving your capsules.");
