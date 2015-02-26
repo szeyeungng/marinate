@@ -37,18 +37,28 @@
   </div>
 </nav>
 
-<!-- Sidebar -->
-<div style="height:100vh;padding-top:50px;background-color:lightgray" class="col-sm-3 col-md-2 sidebar">
-  <!-- INSERT iterative code to search DB for Capsules here -->
+<!-- Capsule List -->
+<div style="height:100vh;padding-top:50px">
+
+    <!-- INSERT iterative code to search DB for Capsules here -->
     <% for(var i=0; i < capsule.length; i++) { %>
-          <div style="padding-top:20px"><a href=""><%= capsule[i].capsuleName %></a></div>
+        <a href="">
+            <blockquote>
+                <p><%= capsule[i].capsuleName %></p>
+                <small>created <cite title="Source Title"><%= capsule[i].date %></cite></small>
+            </blockquote>
+        </a>
+        <!--
+          <div style="padding:20px;background-color:#eeeeee"><a href=""><%= capsule[i].capsuleName %></a></div>
+        -->
     <% } %>
 
-  <!-- This link should pop-up create menu -->
-  <div style="padding-top:20px">
-    <a style="cursor:pointer" data-toggle="modal" data-target="#exampleModal" >New Capsule</a>
-  </div>
 
+
+    <!-- This link should pop-up create menu -->
+    <div style="position:absolute;padding-left:20px;bottom:20px">
+        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#exampleModal" >New Capsule</button>
+    </div>
 </div>
 
 <!-- Modal Dialog -->
@@ -83,33 +93,18 @@
 
 
 <!-- Main content -->
+<!--
 <div style="padding-top:50px" class="container">
-
-    <!--<div class="page-header text-center">
-        <h1><span></span> Profile - <%= user.email %></h1>
-        <a href="/logout" class="btn btn-default btn-sm">Logout</a>
-    </div>-->
-
     <div class="row">
-
-        <!-- LOCAL INFORMATION -->
-        <!--<div class="col-sm-6">
-            <div class="well">
-                <h3><span class="fa fa-user"></span> Local</h3>
-
-                    <p>
-                        <strong>id</strong>: <%= user._id %><br>
-                        <strong>email</strong>: <%= user.email %><br>
-                        <strong>password</strong>: <%= user.password %><br>
-                        <strong>phone number</strong>: <%= user.phoneNumber %>
-                    </p>
-
+        <form action="/newcapsule" method="post" name="newcapsule">
+            <div class="form-group">
+                <textarea class="form-control" name="capsuleEntry"></textarea>
             </div>
-        </div>-->
-
+            <button type="submit" class="btn btn-primary">Post</button>
+        </form>
     </div>
-
 </div>
+-->
 
 </body>
 </html>
