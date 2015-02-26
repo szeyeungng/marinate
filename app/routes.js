@@ -44,6 +44,25 @@ module.exports = function(app, passport) {
         failureFlash : true // allow flash messages
     }));
 
+
+    app.get('/capsule', function(req,res){
+        console.log(req.query.id);
+
+        Capsule.findOne({
+            '_id': req.query.id}
+        ).lean().exec(function (err,capsule){
+            if (err){
+                console.log("error retrieving your capules")
+            }
+            else{
+                console.log(capsule);
+                res.render('capsule.ejs',{user:req.user, capsule:capsule});
+            }
+        })
+        
+        
+    });
+
     // =====================================
     // PROFILE SECTION =====================
     // =====================================

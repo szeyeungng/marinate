@@ -43,7 +43,7 @@
 
     <!-- INSERT iterative code to search DB for Capsules here -->
     <% for(var i=0; i < capsule.length; i++) { %>
-        <a href="">
+        <a href="/capsule?id=<%= capsule[i]._id%>">
             <blockquote>
                 <p><%= capsule[i].capsuleName %></p>
                 <small>created <cite title="Source Title"><%= capsule[i].date %></cite></small>
