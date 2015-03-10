@@ -38,7 +38,23 @@
   </div>
 </nav>
 
+<!-- Main content -->
+<div style="padding-top:50px">
+  <blockquote>
+      <p><%= capsule.capsuleName %></p>
+      <small>created <cite title="Source Title"><%= capsule.date %></cite></small>
+  </blockquote>
+</div>
 
+<!-- textarea -->
+<form style="position:fixed;bottom:0px;width:100%;padding:10px" action="/newpost" method="post" name="newpost">
+      <textarea style="display:none" name="capsuleID"><%= capsule._id %></textarea>
+      <textarea class="form-control" name="capsuleEntry"></textarea>
+    <button type="submit" class="btn btn-primary">Post</button>
+    <a href="/profile">
+      <button type="button" class="btn btn-secondary">Back</button>
+    </a>
+</form>
 
 </body>
 </html>

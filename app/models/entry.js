@@ -6,7 +6,8 @@ var mongoose = require('mongoose');
 var entrySchema = mongoose.Schema({
 
     entry        : String,
-    date	     : Date
+    date	     : Date,
+    capsuleID	 : String
 
 },{collection:'entry'});
 

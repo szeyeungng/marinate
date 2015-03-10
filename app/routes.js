@@ -104,6 +104,26 @@ module.exports = function(app, passport) {
         res.redirect('/profile');
     });
 
+    app.post('/newpost',function(req,res){
+        var newEntry = new Entry();
+
+        newEntry.entry = req.body.capsuleEntry;
+        newEntry.date = new Date();
+        newEntry.capsuleID = req.body.capsuleID;
+
+        console.log(req);
+
+        newEntry.save(function(err){
+            if(!err){
+                console.log("saved");
+            } else {
+                console.log("could not save :(");
+            }
+        });
+
+        res.redirect('/profile');
+    });
+
     // =====================================
     // LOGOUT ==============================
     // =====================================
