@@ -68,8 +68,13 @@ module.exports = function(app, passport) {
     // we will want this protected so you have to be logged in to visit
     // we will use route middleware to verify this (the isLoggedIn function)
     app.get('/profile', isLoggedIn, function(req, res) {
-        Capsule.find({
-            'creator':req.user.email},
+        Capsule.find(
+        {
+            '$or':[
+                {'creator':req.user.email},
+                {'invitee':req.user.email}
+            ]
+        },
             {'capsuleName':1,'creator':1,'invitee':1,'date':1,'_id':1
         }).lean().exec(function (err,capsule){
             if (err) {

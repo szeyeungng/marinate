@@ -4,10 +4,14 @@
 <title>Capsuul - <%= user.email %></title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
-    <!-- Latest compiled and minified JavaScript -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/css/bootstrap-tokenfield.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tokenfield/0.12.0/css/tokenfield-typeahead.min.css">
     <link rel="shortcut icon" type="image/png" href="http://chathamkentweddingshow.com/wp-content/themes/website/data/img/favicon/c.png"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> 
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.cdnhttps.com/cdn-libraries/bootstrap-tokenfield/0.12.0/bootstrap-tokenfield.min.js"></script>
+
     <style>
     </style>
     <meta name="viewport" content="width=device-width">
@@ -75,7 +79,7 @@
               </div>
               <div class="form-group">
                 <label for="invitee" class="control-label">Invite friends</label>
-                <textarea class="form-control" name="invitee"></textarea>
+                <input type="text" class="form-control" id="tokenfield" name="invitee" value="" />
               </div>
           </div>
           <div class="modal-footer">
@@ -86,6 +90,17 @@
     </div>
   </div>
 </div>
+
+<!-- Tokenfield javascipt code -->
+<script>
+  $('#tokenfield').tokenfield({
+    autocomplete: {
+      source: ['red','blue','green','yellow','violet','brown','purple','black','white'],
+      delay: 100
+    },
+    showAutocompleteOnFocus: true
+  })
+</script>
 
 </body>
 </html>
