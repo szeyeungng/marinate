@@ -43,7 +43,7 @@
 </nav>
 
 <!-- Capsule List -->
-<div style="height:100vh;padding-top:50px">
+<div style="height:90vh;padding-top:50px;overflow:scroll">
 
     <!-- INSERT iterative code to search DB for Capsules here -->
     <% for(var i=0; i < capsule.length; i++) { %>
@@ -54,12 +54,12 @@
             </blockquote>
         </a>
     <% } %>
+</div>
 
     <!-- This link should pop-up create menu -->
-    <div style="position:absolute;padding-left:20px;bottom:20px">
+    <div style="position:fixed;padding-left:20px;bottom:20px">
         <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#exampleModal" >New Capsule</button>
     </div>
-</div>
 
 <!-- Modal Dialog -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
