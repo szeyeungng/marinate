@@ -129,6 +129,23 @@ module.exports = function(app, passport) {
         res.redirect('/profile');
     });
 
+    app.post('/removepost',function(req,res){
+        console.log(req.body.capsuleID);
+
+        Capsule.findOneAndRemove(
+        {
+            '_id':req.body.capsuleID
+        },function (err,capsule){
+            if (err) {
+                console.log("error removing your capsule.");
+            }
+            else {
+                console.log("removing your capsule")
+                res.redirect('/profile');
+            }
+        });
+    });
+
     // =====================================
     // LOGOUT ==============================
     // =====================================

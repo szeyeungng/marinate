@@ -56,5 +56,9 @@
       <button type="button" class="btn btn-secondary">Back</button>
     </a>
 </form>
+<form style="position:fixed;bottom:0px;right:0px;padding:10px" action="/removepost" method="post" name"removepost">
+    <textarea style="display:none" name="capsuleID"><%= capsule._id %></textarea>
+    <button type="submit" class="btn btn-primary">Remove</button>
+</form>
 </body>
 </html>
