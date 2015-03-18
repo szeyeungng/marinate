@@ -7,7 +7,8 @@ var entrySchema = mongoose.Schema({
 
     entry        : String,
     date	     : Date,
-    capsuleID	 : String
+    capsuleID	 : String,
+    author		 : String
 
 },{collection:'entry'});
 

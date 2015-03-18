@@ -115,6 +115,7 @@ module.exports = function(app, passport) {
         newEntry.entry = req.body.capsuleEntry;
         newEntry.date = new Date();
         newEntry.capsuleID = req.body.capsuleID;
+        newEntry.author = req.user.email;
 
         console.log(req);
 
