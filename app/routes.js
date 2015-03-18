@@ -127,7 +127,7 @@ module.exports = function(app, passport) {
             }
         });
 
-        res.redirect('/profile');
+        res.redirect("/capsule?id=" + req.body.capsuleID);
     });
 
     app.post('/removepost',function(req,res){
@@ -136,15 +136,26 @@ module.exports = function(app, passport) {
         Capsule.findOneAndRemove(
         {
             '_id':req.body.capsuleID
-        },function (err,capsule){
+        },function (err){
             if (err) {
                 console.log("error removing your capsule.");
             }
             else {
                 console.log("removing your capsule")
-                res.redirect('/profile');
+                Entry.remove(
+                    {
+                        'capsuleID':req.body.capsuleID
+                    },function (err){
+                        if (err) {
+                            console.log("error removing posts from capsule.");
+                        }
+                        else {
+                            console.log("removing your posts from capsule")
+                            res.redirect('/profile');
+                        }
+                    });
             }
-        });
+        });   
     });
 
     // =====================================
