@@ -84,7 +84,7 @@ module.exports = function(app, passport) {
                 {'invitee':{$regex : ".*"+req.user.email+".*"}}
             ]
         },
-            {'capsuleName':1,'creator':1,'invitee':1,'date':1,'_id':1
+            {'capsuleName':1,'creator':1,'invitee':1,'date':1,'_id':1,'endDate':1
         }).lean().exec(function (err,capsule){
             if (err) {
                 console.log("error retrieving your capsules.");
