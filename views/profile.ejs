@@ -46,19 +46,31 @@
 <div style="height:90vh;padding-top:50px;overflow:scroll">
 
     <!-- INSERT iterative code to search DB for Capsules here -->
-    <% for(var i=0; i < capsule.length; i++) { %>
+    <!--<% for(var i=0; i < capsule.length; i++) { %>
         <a href="/capsule?id=<%= capsule[i]._id%>">
             <blockquote>
                 <p><%= capsule[i].capsuleName %></p>
                 <small>created <cite title="Source Title"><%= capsule[i].date %></cite></small>
             </blockquote>
         </a>
+    <% } %>-->
+
+    <% for(var i=0; i < capsule.length; i++) { %>
+        <div style="padding:0px;margin:0px" class="list-group">
+          <a href="/capsule?id=<%= capsule[i]._id%>" class="list-group-item">
+            <h4 class="list-group-item-heading"><%= capsule[i].capsuleName %></h4>
+            <small class="list-group-item-text">created <%= capsule[i].date %></small>
+          </a>
+        </div>
     <% } %>
 </div>
 
     <!-- This link should pop-up create menu -->
-    <div style="position:fixed;padding-left:10px;bottom:10px">
-        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#exampleModal" >New Capsule</button>
+    <div style="position:fixed;right:10px;bottom:10px">
+        <!--<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#exampleModal" >New Capsule</button>-->
+        <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#exampleModal">
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </button>
     </div>
 
 <!-- Modal Dialog -->
@@ -69,21 +81,21 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title" id="exampleModalLabel">New Capsule</h4>
+        <h4 class="modal-title" id="exampleModalLabel">Add Capsule</h4>
       </div>
       <form action="/newcapsule" method="post" name="newcapsule">
           <div class="modal-body">
               <div class="form-group">
-                <label for="capsuleName" class="control-label">Capsule name*</label>
-                <input type="text" class="form-control" name="capsuleName" required>
+                <label for="capsuleName" class="control-label">Name*</label>
+                <input type="text" class="form-control" name="capsuleName" placeholder="Capsule Name" required>
               </div>
               <div class="form-group">
-                <label for="timer" class="control-label">Marinate for (seconds)*</label>
-                <input type="text" class="form-control" name="timer" required>
+                <label for="timer" class="control-label">Set timer*</label>
+                <input type="text" class="form-control" name="timer" placeholder="Marinate for (seconds)"required>
               </div>
               <div class="form-group">
                 <label for="invitee" class="control-label">Invite friends</label>
-                <input type="text" class="form-control" id="tokenfield" name="invitee" value="" />
+                <input type="text" class="form-control" id="tokenfield" name="invitee" placeholder="Tab or add comma between emails" />
               </div>
           </div>
           <div class="modal-footer">

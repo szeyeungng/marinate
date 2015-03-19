@@ -24,7 +24,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand">marinate</a>
+      <a href="/profile" class="navbar-brand">marinate</a>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -43,11 +43,33 @@
   <blockquote>
       <p><%= capsule.capsuleName %></p>
       <small>created <cite title="Source Title"><%= capsule.date %></cite></small>
+      <small>marinate until <cite title="Source Title"><%= capsule.endDate %></cite></small>
   </blockquote>
 </div>
 
+<!-- Text Area -->
+<form style="position:absolute;right:30px;bottom:0px;padding:10px" action="/newpost" method="post" name="newpost">
+  <div class="col-lg-6">
+      <div class="input-group">
+          <textarea style="display:none" name="capsuleID"><%= capsule._id %></textarea>
+          <input type="text" class="form-control" name="capsuleEntry" placeholder="Post something..">
+          <span class="input-group-btn">
+            <button class="btn btn-primary" type="submit">Post</button>
+          </span>
+      </div><!-- /input-group -->
+    </div><!-- /.col-lg-6 -->
+  </div>
+</form><!-- /.row -->
+
+<form style="position:fixed;bottom:10px;right:10px" action="/removepost" method="post" name"removepost">
+  <textarea style="display:none" name="capsuleID"><%= capsule._id %></textarea>
+  <button type="submit" class="btn btn-danger" aria-label="Trash">
+    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+  </button>
+</form>
 
 <!-- textarea -->
+<!--
 <form style="position:fixed;bottom:0px;width:100%;padding:10px" action="/newpost" method="post" name="newpost">
       <textarea style="display:none" name="capsuleID"><%= capsule._id %></textarea>
       <textarea class="form-control" name="capsuleEntry"></textarea>
@@ -56,9 +78,12 @@
       <button type="button" class="btn btn-secondary">Back</button>
     </a>
 </form>
-<form style="position:fixed;bottom:0px;right:0px;padding:10px" action="/removepost" method="post" name"removepost">
-    <textarea style="display:none" name="capsuleID"><%= capsule._id %></textarea>
-    <button type="submit" class="btn btn-primary">Remove</button>
-</form>
+-->
+
+<!--<form action="/removepost" method="post" name"removepost">
+  <textarea style="display:none" name="capsuleID"><%= capsule._id %></textarea>
+  <button type="submit" class="btn btn-primary">Remove</button>
+</form>-->
+
 </body>
 </html>
