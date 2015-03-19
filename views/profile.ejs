@@ -60,9 +60,16 @@
           <a href="/capsule?id=<%= capsule[i]._id%>" class="list-group-item">
             <h4 class="list-group-item-heading"><%= capsule[i].capsuleName %></h4>
             <div class="progress">
-              <div class="progress-bar" role="progressbar" style="width:<%= 100*((Date.now() - Date.parse(capsule[i].date))/(Date.parse(capsule[i].endDate) - Date.parse(capsule[i].date)))%>%">
-              <%= parseInt(100*((Date.now() - Date.parse(capsule[i].date))/(Date.parse(capsule[i].endDate) - Date.parse(capsule[i].date))))%>%
+            <% if ((parseInt(100*((Date.now() - Date.parse(capsule[i].date))/(Date.parse(capsule[i].endDate) - Date.parse(capsule[i].date))))) > 100) {%>
+              <div class="progress-bar progress-bar-success" role="progressbar" style="width:100%">
+                Unlocked!
               </div>
+              <% }%>
+              <% if((parseInt(100*((Date.now() - Date.parse(capsule[i].date))/(Date.parse(capsule[i].endDate) - Date.parse(capsule[i].date))))) < 100) {%>
+              <div class="progress-bar" role="progressbar" style="width:<%= parseInt(100*((Date.now() - Date.parse(capsule[i].date))/(Date.parse(capsule[i].endDate) - Date.parse(capsule[i].date))))%>%">
+                <%= parseInt(100*((Date.now() - Date.parse(capsule[i].date))/(Date.parse(capsule[i].endDate) - Date.parse(capsule[i].date))))%>%
+              </div>
+              <% }%>
             </div>
           </a>
         </div>
