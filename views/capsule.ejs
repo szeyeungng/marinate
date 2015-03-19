@@ -60,19 +60,21 @@
   <% } %>
 <% } %>
 
-<!-- Text Area -->
-<form style="position:fixed;right:30px;bottom:0px;padding:10px" action="/newpost" method="post" name="newpost">
-  <div class="col-lg-6">
-      <div class="input-group">
-          <textarea style="display:none" name="capsuleID"><%= capsule._id %></textarea>
-          <input type="text" class="form-control" name="capsuleEntry" placeholder="Post something..">
-          <span class="input-group-btn">
-            <button class="btn btn-primary" type="submit">Post</button>
-          </span>
-      </div><!-- /input-group -->
-    </div><!-- /.col-lg-6 -->
-  </div>
-</form><!-- /.row -->
+<% if (capsule.endDate > new Date()) {%>
+  <!-- Text Area -->
+  <form style="position:fixed;right:30px;bottom:0px;padding:10px" action="/newpost" method="post" name="newpost">
+    <div class="col-lg-6">
+        <div class="input-group">
+            <textarea style="display:none" name="capsuleID"><%= capsule._id %></textarea>
+            <input type="text" class="form-control" name="capsuleEntry" placeholder="Post something..">
+            <span class="input-group-btn">
+              <button class="btn btn-primary" type="submit">Post</button>
+            </span>
+        </div><!-- /input-group -->
+      </div><!-- /.col-lg-6 -->
+    </div>
+  </form><!-- /.row -->
+<%}%>
 
 <!-- textarea -->
 <!--
