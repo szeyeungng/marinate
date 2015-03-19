@@ -46,7 +46,7 @@ module.exports = function(app, passport) {
 
 
     app.get('/capsule', function(req,res){
-        console.log(req.query.id);
+        //console.log(req.query.id);
 
         Capsule.findOne({
             '_id': req.query.id}
@@ -55,11 +55,20 @@ module.exports = function(app, passport) {
                 console.log("error retrieving your capules")
             }
             else{
-                console.log(capsule);
-                res.render('capsule.ejs',{user:req.user, capsule:capsule});
+                //console.log(capsule);
+                Entry.find({
+                    'capsuleID': capsule._id}
+                ).lean().exec(function (err,entry){
+                    if (err){
+                        console.log("error retrieving your capules")
+                    }
+                    else{
+                        console.log(entry);
+                        res.render('capsule.ejs',{user:req.user, capsule:capsule, entry:entry});
+                    }
+                })
             }
-        })
-        
+        })        
     });
 
     // =====================================
@@ -81,7 +90,7 @@ module.exports = function(app, passport) {
                 console.log("error retrieving your capsules.");
             }
             else {
-                console.log(capsule);
+                //console.log(capsule);
                 res.render('profile.ejs',{capsule:capsule,user:req.user});
             }
         });
@@ -90,13 +99,23 @@ module.exports = function(app, passport) {
 
     app.post('/newcapsule',function(req,res){
         var newCapsule = new Capsule();
+        var seconds = req.body.timer;
+
+        var startDate = new Date();
+        var endDate = new Date();
+        endDate.setSeconds(endDate.getSeconds()+parseInt(seconds));
+
+        console.log(seconds);
+        console.log(startDate);
+        console.log(endDate);
 
         newCapsule.capsuleName = req.body.capsuleName;
-        newCapsule.date = new Date();
+        newCapsule.date = startDate;
         newCapsule.creator = req.user.email;
         newCapsule.invitee = req.body.invitee;
+        newCapsule.endDate = endDate;
 
-        console.log(req);
+        //console.log(req);
 
         newCapsule.save(function(err) {
             if(!err){
@@ -117,7 +136,7 @@ module.exports = function(app, passport) {
         newEntry.capsuleID = req.body.capsuleID;
         newEntry.author = req.user.email;
 
-        console.log(req);
+        //console.log(req);
 
         newEntry.save(function(err){
             if(!err){

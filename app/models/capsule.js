@@ -8,7 +8,8 @@ var capsuleSchema = mongoose.Schema({
     capsuleName  : String,
     date 		 : Date,
     creator		 : String,
-    invitee		 : String
+    invitee		 : String,
+    endDate		 : Date
 
 },{collection:'capsule'});
 
