@@ -47,6 +47,16 @@
     <% } %>
 
     <!-- SIGNUP FORM -->
+    <form action="/signup" method="post" class="form-signin">
+      <!--<h2 class="form-signin-heading">marinate</h2>-->
+      <label for="email" class="sr-only">Email address</label>
+      <input type="email" name="email" class="form-control" placeholder="Email" required autofocus>
+      <label for="password" class="sr-only">Password</label>
+      <input type="password" name="password" class="form-control" placeholder="Password" required>
+      <button class="btn btn-primary btn-block" type="submit">Sign up</button>
+    </form>
+
+<!--
     <form action="/signup" method="post" name="signup">
         <div class="form-group">
             <label>Email</label>
@@ -58,6 +68,7 @@
         </div>
         <button type="submit" class="btn btn-primary">Sign up</button>
     </form>
+-->
 
     <div style="padding-bottom:80px"></div>
 

@@ -48,6 +48,21 @@
     <% } %>
 
     <!-- LOGIN FORM -->
+    <form action="/login" method="post" class="form-signin">
+      <!--<h2 class="form-signin-heading">marinate</h2>-->
+      <label for="email" class="sr-only">Email address</label>
+      <input type="email" name="email" class="form-control" placeholder="Email" required autofocus>
+      <label for="password" class="sr-only">Password</label>
+      <input type="password" name="password" class="form-control" placeholder="Password" required>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" value="remember-me"> Remember me
+        </label>
+      </div>
+      <button class="btn btn-primary btn-block" type="submit">Log in</button>
+    </form>
+
+<!--
     <form action="/login" method="post">
         <div class="form-group">
             <label>Email</label>
@@ -60,6 +75,7 @@
 
         <button type="submit" class="btn btn-primary">Login</button>
     </form>
+-->
 
 </div>
 
