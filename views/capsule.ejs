@@ -48,13 +48,13 @@
     <%if (entry[i].author!=user.email) {%>
       <div style="margin-left:10px;margin-right:50px" class="well well-sm">
         <%= entry[i].entry %>
-        <br><small><%= entry[i].author %></small>
+        <br><small><%= entry[i].author %> -<%= entry[i].date.toDateString() %></small>
       </div>
     <% } %>
     <% if (entry[i].author==user.email) {%>
       <div style="margin-left:50px;margin-right:10px" class="well well-sm">
         <%= entry[i].entry %>
-        <br><small><%= entry[i].author %></small>
+        <br><small><%= entry[i].author %> -<%= entry[i].date.toDateString() %></small>
       </div>
     <% } %>
   <% } %>
