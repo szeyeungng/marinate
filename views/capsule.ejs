@@ -43,6 +43,23 @@
   <h4><%= capsule.capsuleName %></h4>
 </div>
 
+<% if (capsule.endDate < new Date()) {%>
+  <% for(var i=0; i < entry.length; i++) { %>
+    <%if (entry[i].author!=user.email) {%>
+      <div style="margin-left:10px;margin-right:50px" class="well well-sm">
+        <%= entry[i].entry %>
+        <br><small><%= entry[i].author %></small>
+      </div>
+    <% } %>
+    <% if (entry[i].author==user.email) {%>
+      <div style="margin-left:50px;margin-right:10px" class="well well-sm">
+        <%= entry[i].entry %>
+        <br><small><%= entry[i].author %></small>
+      </div>
+    <% } %>
+  <% } %>
+<% } %>
+
 <!-- Text Area -->
 <form style="position:fixed;right:30px;bottom:0px;padding:10px" action="/newpost" method="post" name="newpost">
   <div class="col-lg-6">
