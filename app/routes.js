@@ -81,7 +81,7 @@ module.exports = function(app, passport) {
         {
             '$or':[
                 {'creator':req.user.email},
-                {'invitee':req.user.email}
+                {'invitee':{$regex : ".*"+req.user.email+".*"}}
             ]
         },
             {'capsuleName':1,'creator':1,'invitee':1,'date':1,'_id':1
