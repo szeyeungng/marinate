@@ -105,9 +105,16 @@ module.exports = function(app, passport) {
         var endDate = new Date();
         endDate.setSeconds(endDate.getSeconds()+parseInt(seconds));
 
-        console.log(seconds);
-        console.log(startDate);
-        console.log(endDate);
+        var denominator = Date.parse(endDate) - Date.parse(startDate);
+        var numerator = Date.parse(endDate) - Date.now();
+        var ratio = numerator/denominator;
+
+        //console.log(seconds);
+        //console.log(startDate);
+        //console.log(endDate);
+        console.log(numerator);
+        console.log(denominator);
+        console.log(ratio*100);
 
         newCapsule.capsuleName = req.body.capsuleName;
         newCapsule.date = startDate;
