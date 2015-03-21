@@ -40,7 +40,8 @@
 
 <!-- Main content -->
 <div style="padding-left:20px;padding-top:20px" class="page-header">
-  <h4><%= capsule.capsuleName %></h4>
+  <h4><%= capsule.capsuleName %>  <span class="badge"><%= entry.length %></span></h4>
+
 </div>
 
 <% if (capsule.endDate < new Date()) {%>
@@ -61,6 +62,9 @@
 <% } %>
 
 <% if (capsule.endDate > new Date()) {%>
+  <!-- Add Statistics -->
+  <h1><%= parseInt((Date.parse(capsule.endDate)-Date.now())/60000) %>min left</h1>
+
   <!-- Text Area -->
   <form style="position:fixed;right:30px;bottom:0px;padding:10px" action="/newpost" method="post" name="newpost">
     <div class="col-lg-6">
