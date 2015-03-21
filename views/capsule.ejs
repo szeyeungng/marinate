@@ -64,6 +64,12 @@
 <% if (capsule.endDate > new Date()) {%>
   <!-- Add Statistics -->
   <h1><%= parseInt((Date.parse(capsule.endDate)-Date.now())/60000) %>min left</h1>
+  <% if (aggregate.length > 0) {%>
+    <% for(var i=0; i<aggregate.length; i++) {%>
+      <h2><%= aggregate[i]._id %>: <%= aggregate[i].entrySum %></h2>
+    <% } %>
+  <% } %>
+
 
   <!-- Text Area -->
   <form style="position:fixed;right:30px;bottom:0px;padding:10px" action="/newpost" method="post" name="newpost">

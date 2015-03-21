@@ -52,7 +52,7 @@ module.exports = function(app, passport) {
             '_id': req.query.id}
         ).lean().exec(function (err,capsule){
             if (err){
-                console.log("error retrieving your capules")
+                console.log("error retrieving your capules");
             }
             else{
                 //console.log(capsule);
@@ -60,11 +60,23 @@ module.exports = function(app, passport) {
                     'capsuleID': capsule._id}
                 ).lean().exec(function (err,entry){
                     if (err){
-                        console.log("error retrieving your capules")
+                        console.log("error retrieving your capules");
                     }
                     else{
-                        console.log(entry);
-                        res.render('capsule.ejs',{user:req.user, capsule:capsule, entry:entry});
+                        //console.log(entry);
+                        Entry.aggregate(
+                        {$match:{'capsuleID':req.query.id}},
+                        {$group:{_id:'$author',entrySum:{$sum:1}}},
+                        {$project:{_id:1,entrySum:1}},
+                        function(err,aggregate){
+                            if (err){
+                                console.log("error grouping entries by author");
+                            }
+                            else{
+                                console.log(aggregate);
+                                res.render('capsule.ejs',{user:req.user, capsule:capsule, entry:entry, aggregate:aggregate});
+                            }
+                        }) 
                     }
                 })
             }
