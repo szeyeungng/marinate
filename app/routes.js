@@ -3,7 +3,6 @@ var Capsule = require('../app/models/capsule');
 
 // app/routes.js
 module.exports = function(app, passport) {
-
     // =====================================
     // HOME PAGE (with login links) ========
     // =====================================
@@ -65,15 +64,17 @@ module.exports = function(app, passport) {
                     else{
                         //console.log(entry);
                         Entry.aggregate(
-                        {$match:{'capsuleID':req.query.id}},
-                        {$group:{_id:'$author',entrySum:{$sum:1}}},
-                        {$project:{_id:1,entrySum:1}},
+                            {$match:{'capsuleID':req.query.id}},
+                            {$group:{_id:'$author',entrySum:{$sum:1}}},
+                            {$project:{_id:1,entrySum:1}},
                         function(err,aggregate){
                             if (err){
                                 console.log("error grouping entries by author");
                             }
                             else{
-                                console.log(aggregate);
+                                //console.log(capsule);
+                                //console.log(entry);
+                                //console.log(aggregate);
                                 res.render('capsule.ejs',{user:req.user, capsule:capsule, entry:entry, aggregate:aggregate});
                             }
                         }) 
@@ -121,13 +122,6 @@ module.exports = function(app, passport) {
         var numerator = Date.parse(endDate) - Date.now();
         var ratio = numerator/denominator;
 
-        //console.log(seconds);
-        //console.log(startDate);
-        //console.log(endDate);
-        console.log(numerator);
-        console.log(denominator);
-        console.log(ratio*100);
-
         newCapsule.capsuleName = req.body.capsuleName;
         newCapsule.date = startDate;
         newCapsule.creator = req.user.email;
@@ -169,7 +163,7 @@ module.exports = function(app, passport) {
     });
 
     app.post('/removepost',function(req,res){
-        console.log(req.body.capsuleID);
+        //console.log(req.body.capsuleID);
 
         Capsule.findOneAndRemove(
         {
