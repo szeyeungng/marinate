@@ -96,20 +96,21 @@ module.exports = function(app, passport) {
                         console.log("error retrieving your capules");
                     }
                     else{
+                        res.render('capsule.html',{user:req.user, capsule:capsule, entry:entry});
                         //console.log(entry);
-                        Entry.aggregate(
-                        {$match:{'capsuleID':req.query.id}},
-                        {$group:{_id:'$author',entrySum:{$sum:1}}},
-                        {$project:{_id:1,entrySum:1}},
-                        function(err,aggregate){
-                            if (err){
-                                console.log("error grouping entries by author");
-                            }
-                            else{
-                                console.log(aggregate);
-                                res.render('capsule.html',{user:req.user, capsule:capsule, entry:entry, aggregate:aggregate});
-                            }
-                        }) 
+                        // Entry.aggregate(
+                        // {$match:{'capsuleID':req.query.id}},
+                        // {$group:{_id:'$author',entrySum:{$sum:1}}},
+                        // {$project:{_id:1,entrySum:1}},
+                        // function(err,aggregate){
+                        //     if (err){
+                        //         console.log("error grouping entries by author");
+                        //     }
+                        //     else{
+                        //         console.log(aggregate);
+                        //         res.render('capsule.html',{user:req.user, capsule:capsule, entry:entry, aggregate:aggregate});
+                        //     }
+                        // }) 
                     }
                 })
             }
