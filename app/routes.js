@@ -1,10 +1,10 @@
 var Entry = require('../app/models/entry');
 var Capsule = require('../app/models/capsule');
+var fs = require('fs');
 
 
 // app/routes.js
 module.exports = function(app, passport) {
-
     // =====================================
     // HOME PAGE (with login links) ========
     // =====================================
@@ -101,13 +101,12 @@ module.exports = function(app, passport) {
                         {$match:{'capsuleID':req.query.id}},
                         {$group:{_id:'$author',entrySum:{$sum:1}}},
                         {$project:{_id:1,entrySum:1}},
-                        function(err,aggregate,next){
+                        function(err,aggregate){
                             if (err){
                                 console.log("error grouping entries by author");
                             }
                             else{
                                 console.log(aggregate);
-                                req.capsuleid = req.query.id;
                                 res.render('capsule.html',{user:req.user, capsule:capsule, entry:entry, aggregate:aggregate});
                             }
                         }) 
@@ -155,13 +154,6 @@ module.exports = function(app, passport) {
         var numerator = Date.parse(endDate) - Date.now();
         var ratio = numerator/denominator;
 
-        //console.log(seconds);
-        //console.log(startDate);
-        //console.log(endDate);
-        console.log(numerator);
-        console.log(denominator);
-        console.log(ratio*100);
-
         newCapsule.capsuleName = req.body.capsuleName;
         newCapsule.date = startDate;
         newCapsule.creator = req.user.email;
@@ -203,7 +195,7 @@ module.exports = function(app, passport) {
     });
 
     app.post('/removepost',function(req,res){
-        console.log(req.body.capsuleID);
+        //console.log(req.body.capsuleID);
 
         Capsule.findOneAndRemove(
         {
@@ -229,6 +221,44 @@ module.exports = function(app, passport) {
             }
         });   
     });
+
+    app.post('/newimage',function(req,res){
+        console.dir(req.files);
+
+        var newEntry = new Entry();
+
+        newEntry.date = new Date();
+        newEntry.capsuleID = req.body.capsuleID;
+        newEntry.author = req.user.email;
+        newEntry.image.data = fs.readFileSync(req.files.image.path);
+        newEntry.image.contentType = req.files.image.mimetype;
+
+        newEntry.save(function(err){
+            if(!err){
+                console.log("saved");
+            } else {
+                console.log("could not save :(");
+            }
+        });
+        res.redirect("/capsule?id=" + req.body.capsuleID);
+    });
+
+    // app.get('/getimage', function (req, res) {
+    //     Entry.find(
+    //         {'image.contentType':{$exists:true}},
+    //         {'image.data':1,'image.contentType':1}).lean().exec(function (err, doc) {
+    //             if (err){
+    //                 console.log("error retrieving image.");
+    //             }
+    //             else {
+    //                 console.log(doc[0].image.data);
+    //                 console.log(doc[0].image.contentType);
+
+    //                 res.contentType(doc[0].image.contentType);
+    //                 res.send(doc[0].image.data.buffer);
+    //             }
+    //         });
+    //     });
 
     // =====================================
     // LOGOUT ==============================

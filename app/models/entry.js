@@ -8,7 +8,8 @@ var entrySchema = mongoose.Schema({
     entry        : String,
     date	     : Date,
     capsuleID	 : String,
-    author		 : String
+    author		 : String,
+    image		 : { data: Buffer, contentType: String }
 
 },{collection:'entry'});
 

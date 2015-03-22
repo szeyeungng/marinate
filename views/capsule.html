@@ -11,7 +11,11 @@
     <link rel="shortcut icon" type="image/png" href="http://www.mta.info/sites/all/themes/mta/images/subway_bullets/m.png"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script> 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<<<<<<< HEAD:views/capsule.html
     <script src="http://d3js.org/d3.v3.min.js"></script>
+=======
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
+>>>>>>> 4990a68b43fcef8a9ded1c96db3106eda22b3457:views/capsule.ejs
     <style>
       body {
     font: 10px sans-serif;
@@ -21,6 +25,7 @@
       stroke: #fff;
     }
     </style>
+
     <meta name="viewport" content="width=device-width">
 </head>
 <body>
@@ -146,6 +151,11 @@ d3.json("/getcapsule/<%= capsule._id%>" , function(error, data) {
       </div><!-- /.col-lg-6 -->
     </div>
   </form><!-- /.row -->
+  <form action="/newimage" method="post" name="newimage" enctype="multipart/form-data">
+    <textarea style="display:none" name="capsuleID"><%= capsule._id %></textarea>
+    <input type="file" name="image" accept="image/*">
+    <input type="submit">
+  </form>
 <%}%>
 
 <!-- textarea -->
@@ -217,6 +227,10 @@ d3.json("/getcapsule/<%= capsule._id%>" , function(error, data) {
     </div>
   </div>
 </div>
+
+<script>
+  /*var socket = io('http://localhost:8080/capsule?id='+capsule._id);*/
+</script>
 
 </body>
 </html>
