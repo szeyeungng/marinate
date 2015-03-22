@@ -13,6 +13,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 
+var multer = require('multer');
+
 // configuration =========================================
 mongoose.connect('mongodb://szeyeungng:Password123!@ds029197.mongolab.com:29197/marinate');
 
@@ -30,6 +32,8 @@ app.use(session({secret:'ilovescotchscotchyscotchscotch'})); //session secret
 app.use(passport.initialize());
 app.use(passport.session()); //persistent login sessions
 app.use(flash()); //use connect-flash for flash messages stored in session
+
+app.use(multer({dest:'./uploads/'}));
 
 // routes =================================================
 require('./app/routes.js')(app,passport); //load our routes and pass in our app and fully configured passport

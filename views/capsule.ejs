@@ -11,6 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
     <style>
     </style>
+
     <meta name="viewport" content="width=device-width">
 </head>
 <body>
@@ -70,6 +71,7 @@
       <h2><%= aggregate[i]._id %>: <%= aggregate[i].entrySum %></h2>
     <% } %>
   <% } %>
+    
 
 
   <!-- Text Area -->
@@ -85,8 +87,9 @@
       </div><!-- /.col-lg-6 -->
     </div>
   </form><!-- /.row -->
-  <form action="/newImage" method="post" name="uploadImage">
-    <input type="file" name="pic" accept="image/*">
+  <form action="/newimage" method="post" name="newimage" enctype="multipart/form-data">
+    <textarea style="display:none" name="capsuleID"><%= capsule._id %></textarea>
+    <input type="file" name="image" accept="image/*">
     <input type="submit">
   </form>
 <%}%>
@@ -162,7 +165,7 @@
 </div>
 
 <script>
-  var socket = io('http://localhost:8080/capsule?id='+capsule._id);
+  /*var socket = io('http://localhost:8080/capsule?id='+capsule._id);*/
 </script>
 
 </body>

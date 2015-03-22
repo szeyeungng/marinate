@@ -1,5 +1,6 @@
 var Entry = require('../app/models/entry');
 var Capsule = require('../app/models/capsule');
+var fs = require('fs');
 
 // app/routes.js
 module.exports = function(app, passport) {
@@ -189,6 +190,44 @@ module.exports = function(app, passport) {
             }
         });   
     });
+
+    app.post('/newimage',function(req,res){
+        console.dir(req.files);
+
+        var newEntry = new Entry();
+
+        newEntry.date = new Date();
+        newEntry.capsuleID = req.body.capsuleID;
+        newEntry.author = req.user.email;
+        newEntry.image.data = fs.readFileSync(req.files.image.path);
+        newEntry.image.contentType = req.files.image.mimetype;
+
+        newEntry.save(function(err){
+            if(!err){
+                console.log("saved");
+            } else {
+                console.log("could not save :(");
+            }
+        });
+        res.redirect("/capsule?id=" + req.body.capsuleID);
+    });
+
+    app.get('/getimage', function (req, res) {
+        Entry.find(
+            {'image.contentType':'image/png'},
+            {'image.data':1,'image.contentType':1}).lean().exec(function (err, doc) {
+                if (err){
+                    console.log("error retrieving image.");
+                }
+                else {
+                    console.log(doc[0].image.data);
+                    console.log(doc[0].image.contentType);
+
+                    res.contentType(doc[0].image.contentType);
+                    res.send(doc[0].image.data.buffer);
+                }
+            });
+        });
 
     // =====================================
     // LOGOUT ==============================
