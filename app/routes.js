@@ -76,6 +76,7 @@ module.exports = function(app, passport) {
                                 //console.log(capsule);
                                 //console.log(entry);
                                 //console.log(aggregate);
+                                console.log(entry);
                                 res.render('capsule.ejs',{user:req.user, capsule:capsule, entry:entry, aggregate:aggregate});
                             }
                         }) 
@@ -214,7 +215,7 @@ module.exports = function(app, passport) {
 
     app.get('/getimage', function (req, res) {
         Entry.find(
-            {'image.contentType':'image/png'},
+            {'image.contentType':{$exists:true}},
             {'image.data':1,'image.contentType':1}).lean().exec(function (err, doc) {
                 if (err){
                     console.log("error retrieving image.");

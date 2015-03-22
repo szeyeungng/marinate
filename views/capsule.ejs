@@ -71,6 +71,13 @@
       <h2><%= aggregate[i]._id %>: <%= aggregate[i].entrySum %></h2>
     <% } %>
   <% } %>
+
+  <!-- test image code -->
+  <% for(var i=0; i < entry.length; i++) { %>
+    <% if (entry[2].image.contentType=="image/png") {%>
+      <%= entry[2].image.data.buffer %>
+    <% } %>
+  <% } %>
     
 
 

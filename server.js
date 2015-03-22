@@ -38,13 +38,13 @@ app.use(multer({dest:'./uploads/'}));
 // routes =================================================
 require('./app/routes.js')(app,passport); //load our routes and pass in our app and fully configured passport
 
-/*app.listen(port);*/
-var io = require('socket.io').listen(app.listen(port));
+app.listen(port);
+/*var io = require('socket.io').listen(app.listen(port));*/
 console.log('server has started');
 
-io.on('connection', function(socket){
+/*io.on('connection', function(socket){
   console.log('a user connected');
   socket.on('disconnect', function(){
     console.log('user disconnected');
   });
-});
+});*/
