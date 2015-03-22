@@ -22,7 +22,9 @@ app.use(morgan('dev')); // log every request to console
 app.use(cookieParser()); //read cookies
 app.use(bodyParser()); //get information from html forms
 
-app.set('view engine','ejs');
+app.engine('.html',require('ejs').__express);
+app.set('views', __dirname + '/views');
+app.set('view engine','html');
 
 // required for passport
 app.use(session({secret:'ilovescotchscotchyscotchscotch'})); //session secret

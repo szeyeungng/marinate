@@ -1,6 +1,7 @@
 var Entry = require('../app/models/entry');
 var Capsule = require('../app/models/capsule');
 
+
 // app/routes.js
 module.exports = function(app, passport) {
 
@@ -8,7 +9,7 @@ module.exports = function(app, passport) {
     // HOME PAGE (with login links) ========
     // =====================================
     app.get('/', function(req, res) {
-        res.render('login.ejs', { message: req.flash('loginMessage') });
+        res.render('login.html', { message: req.flash('loginMessage') });
     });
 
     // =====================================
@@ -18,7 +19,7 @@ module.exports = function(app, passport) {
     app.get('/login', function(req, res) {
 
         // render the page and pass in any flash data if it exists
-        res.render('login.ejs', { message: req.flash('loginMessage') }); 
+        res.render('login.html', { message: req.flash('loginMessage') }); 
     });
 
     // process the login form
@@ -34,7 +35,7 @@ module.exports = function(app, passport) {
     // show the signup form
     app.get('/signup', function(req, res) {
         // render the page and pass in any flash data if it exists
-        res.render('signup.ejs', { message: req.flash('signupMessage') });
+        res.render('signup.html', { message: req.flash('signupMessage') });
     });
 
     // process the signup form
@@ -43,6 +44,38 @@ module.exports = function(app, passport) {
         failureRedirect : '/signup', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
     }));
+
+
+
+
+
+    app.param('id', function(req,res ,next,id){
+        console.log(id);
+        Entry.aggregate(
+        {$match:{'capsuleID':id}},
+        {$group:{_id:'$author',entrySum:{$sum:1}}},
+        {$project:{_id:1,entrySum:1}},
+        function(err,aggregate){
+            if (err){
+                console.log("error grouping entries by author");
+            }
+            else{
+                // console.log("i am here");                
+                // console.log(aggregate);
+                req.aggregate = aggregate;
+                next();
+            }
+        });  
+    });
+
+
+
+    app.get('/getcapsule/:id', function(req,res){
+        console.log("inside getcapsule");
+        console.log(req.aggregate);
+        res.json(req.aggregate);
+    });
+
 
 
     app.get('/capsule', function(req,res){
@@ -68,13 +101,14 @@ module.exports = function(app, passport) {
                         {$match:{'capsuleID':req.query.id}},
                         {$group:{_id:'$author',entrySum:{$sum:1}}},
                         {$project:{_id:1,entrySum:1}},
-                        function(err,aggregate){
+                        function(err,aggregate,next){
                             if (err){
                                 console.log("error grouping entries by author");
                             }
                             else{
                                 console.log(aggregate);
-                                res.render('capsule.ejs',{user:req.user, capsule:capsule, entry:entry, aggregate:aggregate});
+                                req.capsuleid = req.query.id;
+                                res.render('capsule.html',{user:req.user, capsule:capsule, entry:entry, aggregate:aggregate});
                             }
                         }) 
                     }
@@ -103,7 +137,7 @@ module.exports = function(app, passport) {
             }
             else {
                 //console.log(capsule);
-                res.render('profile.ejs',{capsule:capsule,user:req.user});
+                res.render('profile.html',{capsule:capsule,user:req.user});
             }
         });
         //res.render('profile.ejs',{user:req.user});
