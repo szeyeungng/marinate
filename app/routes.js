@@ -2,12 +2,9 @@ var Entry = require('../app/models/entry');
 var Capsule = require('../app/models/capsule');
 
 var fs = require('fs');
-// var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
-// var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
-// var S3_BUCKET = process.env.S3_BUCKET;
-var AWS_ACCESS_KEY = "AKIAJQKP4BUV6U4GLWCQ";
-var AWS_SECRET_KEY = "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";
-var S3_BUCKET = "marinatemedia";
+var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
+var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
+var S3_BUCKET = process.env.S3_BUCKET;
 
 // app/routes.js
 module.exports = function(app, passport,aws) {
