@@ -13,6 +13,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="http://d3js.org/d3.v3.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.5/socket.io.min.js"></script>
+    <script type="text/javascript" src="/javascripts/s3upload.js"></script>
     <style>
       body {
     font: 10px sans-serif;
@@ -78,8 +79,53 @@
   <!-- Add Statistics -->
   <h1><%= parseInt((Date.parse(capsule.endDate)-Date.now())/60000) %>min left</h1>
 
+<!-- uploader -->
+<input type="file" id="files"/>
+    <p id="status">Please select a file</p>
+<form method="POST" action="/submit_form">
+    <input type="hidden" id="avatar_url" name="avatar_url"/>
+    <input type="submit" value="Update profile" />
+</form>
+
+<!-- media uploader -->
+<form action="/newimage" method="post" name="newimage" enctype="multipart/form-data">
+  <textarea style="display:none" name="capsuleID"><%= capsule._id %></textarea>
+  <input type="file" name="image" id="files" accept="image/*">
+  <p id="status">Please select a file</p>
+  <input type="submit">
+</form>
+<!-- uploader -->
+
 
 <script>
+
+//--uploader
+function s3_upload(){
+    var status_elem = document.getElementById("status");
+    var url_elem = document.getElementById("avatar_url");
+    var s3upload = new S3Upload({
+        file_dom_selector: 'files',
+        s3_sign_put_url: '/sign_s3',
+        onProgress: function(percent, message) {
+            status_elem.innerHTML = 'Upload progress: ' + percent + '% ' + message;
+        },
+        onFinishS3Put: function(public_url) {
+            status_elem.innerHTML = 'Upload completed. Uploaded to: '+ public_url;
+            url_elem.value = public_url;
+        },
+        onError: function(status) {
+            status_elem.innerHTML = 'Upload error: ' + status;
+        }
+    });
+}
+
+  //Listen for file selection:
+
+(function() {
+    var input_element = document.getElementById("files");
+    input_element.onchange = s3_upload;
+})();
+//--uploader
 
 var width = 500,
     height = 500,
@@ -143,11 +189,6 @@ d3.json("/getcapsule/<%= capsule._id%>" , function(error, data) {
       </div><!-- /.col-lg-6 -->
     </div>
   </form><!-- /.row -->
-  <form action="/newimage" method="post" name="newimage" enctype="multipart/form-data">
-    <textarea style="display:none" name="capsuleID"><%= capsule._id %></textarea>
-    <input type="file" name="image" accept="image/*">
-    <input type="submit">
-  </form>
 <%}%>
 
 <!-- textarea -->
