@@ -2,10 +2,12 @@ var Entry = require('../app/models/entry');
 var Capsule = require('../app/models/capsule');
 
 var fs = require('fs');
-var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
-var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
-var S3_BUCKET = process.env.S3_BUCKET;
-
+// var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
+// var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
+// var S3_BUCKET = process.env.S3_BUCKET;
+var AWS_ACCESS_KEY = "AKIAJQKP4BUV6U4GLWCQ";
+var AWS_SECRET_KEY = "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";
+var S3_BUCKET = "marinatemedia";
 
 // app/routes.js
 module.exports = function(app, passport,aws) {
@@ -49,10 +51,7 @@ module.exports = function(app, passport,aws) {
         failureFlash : true // allow flash messages
     }));
 
-
-
-
-
+    // querying sum of authors' entries for d3 chart
     app.param('id', function(req,res ,next,id){
         console.log(id);
         Entry.aggregate(
@@ -72,16 +71,14 @@ module.exports = function(app, passport,aws) {
         });  
     });
 
-
-
+    // get request for d3 chart
     app.get('/getcapsule/:id', function(req,res){
         console.log("inside getcapsule");
         console.log(req.aggregate);
         res.json(req.aggregate);
     });
 
-
-
+    // get request to load capsule page
     app.get('/capsule', function(req,res){
         //console.log(req.query.id);
 

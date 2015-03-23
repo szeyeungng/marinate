@@ -19,9 +19,12 @@ var path = require('path');
 var multer = require('multer');
 
 //S3 Configuration
-var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
-var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
-var S3_BUCKET = process.env.S3_BUCKET
+var AWS_ACCESS_KEY = "AKIAJQKP4BUV6U4GLWCQ";
+var AWS_SECRET_KEY = "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";
+var S3_BUCKET = "marinatemedia";
+// var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
+// var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
+// var S3_BUCKET = process.env.S3_BUCKET;
 
 // configuration =========================================
 mongoose.connect('mongodb://szeyeungng:Password123!@ds029197.mongolab.com:29197/marinate');
