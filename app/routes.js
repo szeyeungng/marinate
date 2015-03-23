@@ -7,7 +7,7 @@ var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
 var S3_BUCKET = process.env.S3_BUCKET;
 
 // app/routes.js
-module.exports = function(app, passport,aws) {
+module.exports = function(app, passport, aws) {
     // =====================================
     // HOME PAGE (with login links) ========
     // =====================================
