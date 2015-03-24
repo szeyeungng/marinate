@@ -2,9 +2,15 @@ var Entry = require('../app/models/entry');
 var Capsule = require('../app/models/capsule');
 
 var fs = require('fs');
-var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
-var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
-var S3_BUCKET = process.env.S3_BUCKET;
+// S3 config
+// var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
+// var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
+// var S3_BUCKET = process.env.S3_BUCKET;
+var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY || "AKIAI5Z4MK3IYFNSVRQQ";
+var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY || "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";
+var S3_BUCKET = process.env.S3_BUCKET || "marinatemedia";
+
+var uuid = require('node-uuid');
 
 // app/routes.js
 module.exports = function(app, passport, aws) {
@@ -94,6 +100,7 @@ module.exports = function(app, passport, aws) {
                         console.log("error retrieving your capules");
                     }
                     else{
+                        console.log(entry);
                         res.render('capsule.html',{user:req.user, capsule:capsule, entry:entry});
                         //console.log(entry);
                         // Entry.aggregate(
@@ -179,6 +186,7 @@ module.exports = function(app, passport, aws) {
         newEntry.date = new Date();
         newEntry.capsuleID = req.body.capsuleID;
         newEntry.author = req.user.email;
+        newEntry.imageSrc = "";
 
         //console.log(req);
 
@@ -221,26 +229,26 @@ module.exports = function(app, passport, aws) {
         });   
     });
 
-    app.post('/newimage',function(req,res){
-        console.dir(req.files);
+    // app.post('/newimage',function(req,res){
+    //     console.dir(req.files);
 
-        var newEntry = new Entry();
+    //     var newEntry = new Entry();
 
-        newEntry.date = new Date();
-        newEntry.capsuleID = req.body.capsuleID;
-        newEntry.author = req.user.email;
-        newEntry.image.data = fs.readFileSync(req.files.image.path);
-        newEntry.image.contentType = req.files.image.mimetype;
+    //     newEntry.date = new Date();
+    //     newEntry.capsuleID = req.body.capsuleID;
+    //     newEntry.author = req.user.email;
+    //     newEntry.image.data = fs.readFileSync(req.files.image.path);
+    //     newEntry.image.contentType = req.files.image.mimetype;
 
-        newEntry.save(function(err){
-            if(!err){
-                console.log("saved");
-            } else {
-                console.log("could not save :(");
-            }
-        });
-        res.redirect("/capsule?id=" + req.body.capsuleID);
-    });
+    //     newEntry.save(function(err){
+    //         if(!err){
+    //             console.log("saved");
+    //         } else {
+    //             console.log("could not save :(");
+    //         }
+    //     });
+    //     res.redirect("/capsule?id=" + req.body.capsuleID);
+    // });
 
     // app.get('/getimage', function (req, res) {
     //     Entry.find(
@@ -270,10 +278,11 @@ module.exports = function(app, passport, aws) {
     // uploader
     app.get('/sign_s3', function(req, res){
         aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
+        var mediaID = uuid.v1();
         var s3 = new aws.S3();
         var s3_params = {
             Bucket: S3_BUCKET,
-            Key: req.query.s3_object_name,
+            Key: mediaID,
             Expires: 60,
             ContentType: req.query.s3_object_type,
             ACL: 'public-read'
@@ -285,18 +294,33 @@ module.exports = function(app, passport, aws) {
             else{
                 var return_data = {
                     signed_request: data,
-                    url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+req.query.s3_object_name
+                    url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+mediaID
                 };
                 res.write(JSON.stringify(return_data));
                 res.end();
+
+                // save to mongo
+                console.log(req);
+                var newEntry = new Entry();
+
+                newEntry.date = new Date();
+                newEntry.entry = "";
+                // not properly passing in capsuleID
+                newEntry.capsuleID = req.body.capsuleID;
+                newEntry.author = req.user.email;
+                newEntry.imageSrc = return_data.url;
+
+                newEntry.save(function(err){
+                    if(!err){
+                        console.log("saved");
+                    } else {
+                        console.log("could not save :(");
+                    }
+                });
+                res.redirect("/capsule?id=" + req.body.capsuleID);
+                //
             }
         });
-    });
-
-    app.post('/submit_form', function(req, res){
-        avatar_url = req.body.avatar_url;
-        console.log(avatar_url); // TODO: create this function
-        // TODO: Return something useful or redirect
     });
 };
 

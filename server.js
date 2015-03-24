@@ -18,14 +18,9 @@ var path = require('path');
 
 var multer = require('multer');
 
-//S3 Configuration
-var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
-var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
-var S3_BUCKET = process.env.S3_BUCKET;
-
 // configuration =========================================
-//var mongoURI = process.env.mongoURI || 'mongodb://szeyeungng:Password123!@ds029197.mongolab.com:29197/marinate';
-var mongoURI = process.env.mongoURI;
+var mongoURI = process.env.mongoURI || 'mongodb://szeyeungng:Password123!@ds029197.mongolab.com:29197/marinate';
+//var mongoURI = process.env.mongoURI;
 mongoose.connect(mongoURI);
 
 require('./config/passport')(passport); // pass passport for configuration

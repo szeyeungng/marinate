@@ -9,7 +9,7 @@ var entrySchema = mongoose.Schema({
     date	     : Date,
     capsuleID	 : String,
     author		 : String,
-    image		 : { data: Buffer, contentType: String }
+    imageSrc	 : String
 
 },{collection:'entry'});
 
