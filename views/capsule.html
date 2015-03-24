@@ -68,9 +68,8 @@
     <% } %>
     <% if (entry[i].author==user.email) {%>
       <div style="margin-left:50px;margin-right:10px" class="well well-sm">
-        <%= entry[i].imageSrc %>
         <% if (entry[i].imageSrc != "") {%>
-          <img src=<%= entry[i].imageSrc %> height="200px" width="200px"/>
+          <img src="<%= entry[i].imageSrc %>"/>
           <br><small><%= entry[i].author %> -<%= entry[i].date.toDateString() %></small>
         <% } %>
         <% if (entry[i].imageSrc == "") {%>

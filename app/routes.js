@@ -8,7 +8,6 @@ var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
 var S3_BUCKET = process.env.S3_BUCKET;
 
 var uuid = require('node-uuid');
-var refererParser = require('referer-parser');
 
 // app/routes.js
 module.exports = function(app, passport, aws) {
@@ -259,15 +258,11 @@ module.exports = function(app, passport, aws) {
 
                 // save to mongo
                 var newEntry = new Entry();
-                var r = new refererParser(req.headers['referer']);
+                var capsuleURL = req.headers['referer'].split("=");
 
                 newEntry.date = new Date();
                 newEntry.entry = "";
-                    // not properly passing in capsuleID
-                    newEntry.capsuleID = req.body.capsuleID;
-                    //console.log(req);
-                    console.log(req.headers['referer']);
-                    console.log(r.search_term);
+                newEntry.capsuleID = capsuleURL[1];
                 newEntry.author = req.user.email;
                 newEntry.imageSrc = return_data.url;
 
