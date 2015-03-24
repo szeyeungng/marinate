@@ -3,14 +3,12 @@ var Capsule = require('../app/models/capsule');
 
 var fs = require('fs');
 // S3 config
-// var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
-// var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
-// var S3_BUCKET = process.env.S3_BUCKET;
-var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY || "AKIAI5Z4MK3IYFNSVRQQ";
-var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY || "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";
-var S3_BUCKET = process.env.S3_BUCKET || "marinatemedia";
+var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
+var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
+var S3_BUCKET = process.env.S3_BUCKET;
 
 var uuid = require('node-uuid');
+var refererParser = require('referer-parser');
 
 // app/routes.js
 module.exports = function(app, passport, aws) {
@@ -54,74 +52,6 @@ module.exports = function(app, passport, aws) {
         failureFlash : true // allow flash messages
     }));
 
-    // querying sum of authors' entries for d3 chart
-    app.param('id', function(req,res ,next,id){
-        console.log(id);
-        Entry.aggregate(
-        {$match:{'capsuleID':id}},
-        {$group:{_id:'$author',entrySum:{$sum:1}}},
-        {$project:{_id:1,entrySum:1}},
-        function(err,aggregate){
-            if (err){
-                console.log("error grouping entries by author");
-            }
-            else{
-                // console.log("i am here");                
-                // console.log(aggregate);
-                req.aggregate = aggregate;
-                next();
-            }
-        });  
-    });
-
-    // get request for d3 chart
-    app.get('/getcapsule/:id', function(req,res){
-        console.log("inside getcapsule");
-        console.log(req.aggregate);
-        res.json(req.aggregate);
-    });
-
-    // get request to load capsule page
-    app.get('/capsule', function(req,res){
-        //console.log(req.query.id);
-
-        Capsule.findOne({
-            '_id': req.query.id}
-        ).lean().exec(function (err,capsule){
-            if (err){
-                console.log("error retrieving your capules");
-            }
-            else{
-                //console.log(capsule);
-                Entry.find({
-                    'capsuleID': capsule._id}
-                ).lean().exec(function (err,entry){
-                    if (err){
-                        console.log("error retrieving your capules");
-                    }
-                    else{
-                        console.log(entry);
-                        res.render('capsule.html',{user:req.user, capsule:capsule, entry:entry});
-                        //console.log(entry);
-                        // Entry.aggregate(
-                        // {$match:{'capsuleID':req.query.id}},
-                        // {$group:{_id:'$author',entrySum:{$sum:1}}},
-                        // {$project:{_id:1,entrySum:1}},
-                        // function(err,aggregate){
-                        //     if (err){
-                        //         console.log("error grouping entries by author");
-                        //     }
-                        //     else{
-                        //         console.log(aggregate);
-                        //         res.render('capsule.html',{user:req.user, capsule:capsule, entry:entry, aggregate:aggregate});
-                        //     }
-                        // }) 
-                    }
-                })
-            }
-        })        
-    });
-
     // =====================================
     // PROFILE SECTION =====================
     // =====================================
@@ -148,6 +78,78 @@ module.exports = function(app, passport, aws) {
         //res.render('profile.ejs',{user:req.user});
     });
 
+
+
+
+
+        // get request to load capsule page
+    app.get('/capsule', function(req,res){
+        //console.log(req.query.id);
+
+        Capsule.findOne({
+            '_id': req.query.id}
+        ).lean().exec(function (err,capsule){
+            if (err){
+                console.log("error retrieving your capules");
+            }
+            else{
+                Entry.find({
+                    'capsuleID': capsule._id}
+                ).lean().exec(function (err,entry){
+                    if (err){
+                        console.log("error retrieving your capules");
+                    }
+                    else{
+                        //console.log(entry);
+                        res.render('capsule.html',{user:req.user, capsule:capsule, entry:entry});
+                        //console.log(entry);
+                        // Entry.aggregate(
+                        // {$match:{'capsuleID':req.query.id}},
+                        // {$group:{_id:'$author',entrySum:{$sum:1}}},
+                        // {$project:{_id:1,entrySum:1}},
+                        // function(err,aggregate){
+                        //     if (err){
+                        //         console.log("error grouping entries by author");
+                        //     }
+                        //     else{
+                        //         console.log(aggregate);
+                        //         res.render('capsule.html',{user:req.user, capsule:capsule, entry:entry, aggregate:aggregate});
+                        //     }
+                        // }) 
+                    }
+                })
+            }
+        })        
+    });
+
+    // querying sum of authors' entries for d3 chart
+    app.param('id', function(req,res ,next,id){
+        //console.log(id);
+        Entry.aggregate(
+        {$match:{'capsuleID':id}},
+        {$group:{_id:'$author',entrySum:{$sum:1}}},
+        {$project:{_id:1,entrySum:1}},
+        function(err,aggregate){
+            if (err){
+                console.log("error grouping entries by author");
+            }
+            else{
+                // console.log("i am here");                
+                // console.log(aggregate);
+                req.aggregate = aggregate;
+                next();
+            }
+        });  
+    });
+
+    // get request for d3 chart
+    app.get('/getcapsule/:id', function(req,res){
+        //console.log("inside getcapsule");
+        //console.log(req.aggregate);
+        res.json(req.aggregate);
+    });
+
+    // post request for adding new capsules
     app.post('/newcapsule',function(req,res){
         var newCapsule = new Capsule();
         var seconds = req.body.timer;
@@ -179,6 +181,7 @@ module.exports = function(app, passport, aws) {
         res.redirect('/profile');
     });
 
+    // post method for adding new entries
     app.post('/newpost',function(req,res){
         var newEntry = new Entry();
 
@@ -201,6 +204,7 @@ module.exports = function(app, passport, aws) {
         res.redirect("/capsule?id=" + req.body.capsuleID);
     });
 
+    // post method for removing capsules
     app.post('/removepost',function(req,res){
         //console.log(req.body.capsuleID);
 
@@ -227,6 +231,67 @@ module.exports = function(app, passport, aws) {
                     });
             }
         });   
+    });
+
+    // uploader
+    app.get('/sign_s3', function(req, res){
+        aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
+        var mediaID = uuid.v1();
+        var s3 = new aws.S3();
+        var s3_params = {
+            Bucket: S3_BUCKET,
+            Key: mediaID,
+            Expires: 60,
+            ContentType: req.query.s3_object_type,
+            ACL: 'public-read'
+        };
+        s3.getSignedUrl('putObject', s3_params, function(err, data){
+            if(err){
+                console.log(err);
+            }
+            else{
+                var return_data = {
+                    signed_request: data,
+                    url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+mediaID
+                };
+                res.write(JSON.stringify(return_data));
+                res.end();
+
+                // save to mongo
+                var newEntry = new Entry();
+                var r = new refererParser(req.headers['referer']);
+
+                newEntry.date = new Date();
+                newEntry.entry = "";
+                    // not properly passing in capsuleID
+                    newEntry.capsuleID = req.body.capsuleID;
+                    //console.log(req);
+                    console.log(req.headers['referer']);
+                    console.log(r.search_term);
+                newEntry.author = req.user.email;
+                newEntry.imageSrc = return_data.url;
+
+                newEntry.save(function(err){
+                    if(!err){
+                        console.log("saved");
+                    } else {
+                        console.log("could not save :(");
+                    }
+                });
+
+                // not properly redirecting
+                res.redirect("/capsule?id=" + req.body.capsuleID);
+                //
+            }
+        });
+    });
+
+    // =====================================
+    // LOGOUT ==============================
+    // =====================================
+    app.get('/logout', function(req, res) {
+        req.logout();
+        res.redirect('/');
     });
 
     // app.post('/newimage',function(req,res){
@@ -266,62 +331,6 @@ module.exports = function(app, passport, aws) {
     //             }
     //         });
     //     });
-
-    // =====================================
-    // LOGOUT ==============================
-    // =====================================
-    app.get('/logout', function(req, res) {
-        req.logout();
-        res.redirect('/');
-    });
-
-    // uploader
-    app.get('/sign_s3', function(req, res){
-        aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
-        var mediaID = uuid.v1();
-        var s3 = new aws.S3();
-        var s3_params = {
-            Bucket: S3_BUCKET,
-            Key: mediaID,
-            Expires: 60,
-            ContentType: req.query.s3_object_type,
-            ACL: 'public-read'
-        };
-        s3.getSignedUrl('putObject', s3_params, function(err, data){
-            if(err){
-                console.log(err);
-            }
-            else{
-                var return_data = {
-                    signed_request: data,
-                    url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+mediaID
-                };
-                res.write(JSON.stringify(return_data));
-                res.end();
-
-                // save to mongo
-                console.log(req);
-                var newEntry = new Entry();
-
-                newEntry.date = new Date();
-                newEntry.entry = "";
-                // not properly passing in capsuleID
-                newEntry.capsuleID = req.body.capsuleID;
-                newEntry.author = req.user.email;
-                newEntry.imageSrc = return_data.url;
-
-                newEntry.save(function(err){
-                    if(!err){
-                        console.log("saved");
-                    } else {
-                        console.log("could not save :(");
-                    }
-                });
-                res.redirect("/capsule?id=" + req.body.capsuleID);
-                //
-            }
-        });
-    });
 };
 
 // route middleware to make sure a user is logged in

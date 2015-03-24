@@ -87,8 +87,8 @@
   <h1><%= parseInt((Date.parse(capsule.endDate)-Date.now())/60000) %>min left</h1>
 
 <!-- uploader -->
-<input type="file" id="files"/>
-    <p id="status">Please select a file</p>
+<input type="file" id="files" accept="image/*"/>
+    <p id="status"></p>
 
 <!-- media uploader -->
 <!--<form action="/newimage" method="post" name="newimage" enctype="multipart/form-data">
@@ -98,86 +98,6 @@
   <input type="submit">
 </form>-->
 <!-- uploader -->
-
-
-<script>
-
-//--uploader
-function s3_upload(){
-    var status_elem = document.getElementById("status");
-    var url_elem = document.getElementById("avatar_url");
-    var s3upload = new S3Upload({
-        file_dom_selector: 'files',
-        s3_sign_put_url: '/sign_s3',
-        onProgress: function(percent, message) {
-            status_elem.innerHTML = 'Upload progress: ' + percent + '% ' + message;
-        },
-        onFinishS3Put: function(public_url) {
-            status_elem.innerHTML = 'Upload completed. Uploaded to: '+ public_url;
-            url_elem.value = public_url;
-        },
-        onError: function(status) {
-            status_elem.innerHTML = 'Upload error: ' + status;
-        }
-    });
-}
-
-  //Listen for file selection:
-
-(function() {
-    var input_element = document.getElementById("files");
-    input_element.onchange = s3_upload;
-})();
-//--uploader
-
-var width = 500,
-    height = 500,
-    radius = Math.min(width, height) / 2;
-
-var color = d3.scale.ordinal()
-    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
-
-var arc = d3.svg.arc()
-    .outerRadius(radius - 10)
-    .innerRadius(radius - 70);
-
-var pie = d3.layout.pie()
-    .sort(null)
-    .value(function(d) { return d.entrySum; });
-
-var svg = d3.select("body").append("svg")
-    .attr("width", width)
-    .attr("height", height)
-  .append("g")
-    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
-d3.json("/getcapsule/<%= capsule._id%>" , function(error, data) {
-
-  console.log(data);
-  data.forEach(function(d) {
-    d.entrySum = +d.entrySum;
-  });
-
-  var g = svg.selectAll(".arc")
-      .data(pie(data))
-    .enter().append("g")
-      .attr("class", "arc");
-
-  g.append("path")
-      .attr("d", arc)
-      .style("fill", function(d) { return color(d.data._id); });
-
-  g.append("text")
-      .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
-      .attr("dy", ".35em")
-      .style("text-anchor", "middle")
-      .text(function(d) { return (d.data._id + ": " + d.data.entrySum); })
-
-});
-
-</script>
-
-
 
   <!-- Text Area -->
   <form style="position:fixed;right:30px;bottom:0px;padding:10px" action="/newpost" method="post" name="newpost">
@@ -194,30 +114,10 @@ d3.json("/getcapsule/<%= capsule._id%>" , function(error, data) {
   </form><!-- /.row -->
 <%}%>
 
-<!-- textarea -->
-<!--
-<form style="position:fixed;bottom:0px;width:100%;padding:10px" action="/newpost" method="post" name="newpost">
-      <textarea style="display:none" name="capsuleID"><%= capsule._id %></textarea>
-      <textarea class="form-control" name="capsuleEntry"></textarea>
-    <button type="submit" class="btn btn-primary">Post</button>
-    <a href="/profile">
-      <button type="button" class="btn btn-secondary">Back</button>
-    </a>
-</form>
--->
-
 <!-- settings button -->
 <button style="position:fixed;bottom:10px;right:10px" type="button" class="btn btn-default" data-toggle="modal" data-target="#exampleModal">
   <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
 </button>
-
-<!-- Delete Capsule button -->
-<!--<form style="position:fixed;bottom:10px;right:10px" action="/removepost" method="post" name"removepost">
-  <textarea style="display:none" name="capsuleID"><%= capsule._id %></textarea>
-  <button type="submit" class="btn btn-danger" aria-label="Trash">
-    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-  </button>
-</form>-->
 
 <!-- Modal Dialog -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -265,7 +165,79 @@ d3.json("/getcapsule/<%= capsule._id%>" , function(error, data) {
 </div>
 
 <script>
-  /*var socket = io('http://localhost:8080/capsule?id='+capsule._id);*/
+// uploader status UI
+function s3_upload(){
+    var status_elem = document.getElementById("status");
+    var url_elem = document.getElementById("avatar_url");
+    var s3upload = new S3Upload({
+        file_dom_selector: 'files',
+        s3_sign_put_url: '/sign_s3',
+        onProgress: function(percent, message) {
+            status_elem.innerHTML = 'Upload progress: ' + percent + '% ' + message;
+        },
+        onFinishS3Put: function(public_url) {
+            status_elem.innerHTML = 'Upload completed. Uploaded to: '+ public_url;
+            url_elem.value = public_url;
+        },
+        onError: function(status) {
+            status_elem.innerHTML = 'Upload error: ' + status;
+        }
+    });
+}
+
+// Listen for file selection:
+(function() {
+    var input_element = document.getElementById("files");
+    input_element.onchange = s3_upload;
+})();
+//
+
+// d3 code
+var width = 300,
+    height = 300,
+    radius = Math.min(width, height) / 2;
+
+var color = d3.scale.ordinal()
+    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
+var arc = d3.svg.arc()
+    .outerRadius(radius - 10)
+    .innerRadius(radius - 70);
+
+var pie = d3.layout.pie()
+    .sort(null)
+    .value(function(d) { return d.entrySum; });
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+  .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+d3.json("/getcapsule/<%= capsule._id%>" , function(error, data) {
+
+  console.log(data);
+  data.forEach(function(d) {
+    d.entrySum = +d.entrySum;
+  });
+
+  var g = svg.selectAll(".arc")
+      .data(pie(data))
+    .enter().append("g")
+      .attr("class", "arc");
+
+  g.append("path")
+      .attr("d", arc)
+      .style("fill", function(d) { return color(d.data._id); });
+
+  g.append("text")
+      .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")"; })
+      .attr("dy", ".35em")
+      .style("text-anchor", "middle")
+      .text(function(d) { return (d.data._id + ": " + d.data.entrySum); })
+
+});
+//
 </script>
 
 </body>
