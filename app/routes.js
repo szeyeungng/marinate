@@ -3,12 +3,9 @@ var Capsule = require('../app/models/capsule');
 
 var fs = require('fs');
 // S3 config
-// var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
-// var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
-// var S3_BUCKET = process.env.S3_BUCKET;
-var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY || "AKIAINWFZYUI4X5SX7TA";
-var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY || "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";
-var S3_BUCKET = process.env.S3_BUCKET || "marinatemedia";
+var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
+var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
+var S3_BUCKET = process.env.S3_BUCKET;
 
 var uuid = require('node-uuid');
 
