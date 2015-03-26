@@ -1,10 +1,11 @@
 var Entry = require('../app/models/entry');
 var Capsule = require('../app/models/capsule');
-
 var fs = require('fs');
 // S3 config
+var aws = require('aws-sdk');
+
 var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
-var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
+var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY; 
 var S3_BUCKET = process.env.S3_BUCKET;
 
 var uuid = require('node-uuid');
@@ -236,7 +237,9 @@ module.exports = function(app, passport, aws) {
     app.get('/sign_s3', function(req, res){
         aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
         var mediaID = uuid.v1();
+        // aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
         var s3 = new aws.S3();
+        console.log(req.query);
         var s3_params = {
             Bucket: S3_BUCKET,
             Key: mediaID,
