@@ -275,7 +275,7 @@ module.exports = function(app, passport, aws) {
                 });
 
                 // not properly redirecting
-                res.redirect("/capsule?id=" + req.body.capsuleID);
+                res.redirect("/capsule?id=" + capsuleURL[1];);
                 //
             }
         });
