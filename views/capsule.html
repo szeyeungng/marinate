@@ -68,8 +68,14 @@
     <% } %>
     <% if (entry[i].author==user.email) {%>
       <div style="margin-left:50px;margin-right:10px" class="well well-sm">
-        <%= entry[i].entry %>
-        <br><small><%= entry[i].author %> -<%= entry[i].date.toDateString() %></small>
+        <% if (entry[i].imageSrc != "") {%>
+          <img style="max-height:80vh;max-width:80vh" src="<%= entry[i].imageSrc %>"/>
+          <br><small><%= entry[i].author %> -<%= entry[i].date.toDateString() %></small>
+        <% } %>
+        <% if (entry[i].imageSrc == "") {%>
+          <%= entry[i].entry %>
+          <br><small><%= entry[i].author %> -<%= entry[i].date.toDateString() %></small>
+        <% } %>
       </div>
     <% } %>
   <% } %>
@@ -78,19 +84,6 @@
 <% if (capsule.endDate > new Date()) {%>
   <!-- Add Statistics -->
   <h1><%= parseInt((Date.parse(capsule.endDate)-Date.now())/60000) %>min left</h1>
-
-
-    
-
-
-<!-- media uploader -->
-<!--<form action="/newimage" method="post" name="newimage" enctype="multipart/form-data">
-  <textarea style="display:none" name="capsuleID"><%= capsule._id %></textarea>
-  <input type="file" name="image" id="files" accept="image/*">
-  <p id="status">Please select a file</p>
-  <input type="submit">
-</form>-->
-<!-- uploader -->
 
 <script>
 //--uploader
@@ -159,38 +152,16 @@ d3.json("/getcapsule/<%= capsule._id%>" , function(error, data) {
   </form><!-- /.row -->
 <%}%>
 
-<!-- textarea -->
-<!--
-<form style="position:fixed;bottom:0px;width:100%;padding:10px" action="/newpost" method="post" name="newpost">
-      <textarea style="display:none" name="capsuleID"><%= capsule._id %></textarea>
-      <textarea class="form-control" name="capsuleEntry"></textarea>
-    <button type="submit" class="btn btn-primary">Post</button>
-    <a href="/profile">
-      <button type="button" class="btn btn-secondary">Back</button>
-    </a>
-</form>
--->
-
 <!-- settings button -->
 <button style="position:fixed;bottom:10px;right:10px" type="button" class="btn btn-default" data-toggle="modal" data-target="#exampleModal">
   <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
 </button>
 
-
 <label style="position:fixed;bottom:10px;right:70px" type="button" class="btn btn-default">
 <!-- uploader -->
-<input type="file" id="files" style="display:none"/>
-<span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
+  <input type="file" id="files" style="display:none"/>
+  <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
 </label>
-
-
-<!-- Delete Capsule button -->
-<!--<form style="position:fixed;bottom:10px;right:10px" action="/removepost" method="post" name"removepost">
-  <textarea style="display:none" name="capsuleID"><%= capsule._id %></textarea>
-  <button type="submit" class="btn btn-danger" aria-label="Trash">
-    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-  </button>
-</form>-->
 
 <!-- Modal Dialog -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -237,9 +208,6 @@ d3.json("/getcapsule/<%= capsule._id%>" , function(error, data) {
   </div>
 </div>
 
-<script>
-  /*var socket = io('http://localhost:8080/capsule?id='+capsule._id);*/
-</script>
 <script>
 
 //--uploader
