@@ -57,6 +57,7 @@
   <h4><%= capsule.capsuleName %>  <span class="badge"><%= entry.length %></span></h4>
 
 </div>
+<p id="status"></p>
 
 <% if (capsule.endDate < new Date()) {%>
   <% for(var i=0; i < entry.length; i++) { %>
@@ -88,8 +89,8 @@
 <script>
 //--uploader
 
-var width = 500,
-    height = 500,
+var width = 300,
+    height = 300,
     radius = Math.min(width, height) / 2;
 
 var color = d3.scale.ordinal()
@@ -157,8 +158,8 @@ d3.json("/getcapsule/<%= capsule._id%>" , function(error, data) {
   <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
 </button>
 
-<label style="position:fixed;bottom:10px;right:70px" type="button" class="btn btn-default">
 <!-- uploader -->
+<label style="position:fixed;bottom:10px;right:70px" type="button" class="btn btn-default">
   <input type="file" id="files" style="display:none"/>
   <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
 </label>
