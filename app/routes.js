@@ -4,9 +4,9 @@ var fs = require('fs');
 // S3 config
 var aws = require('aws-sdk');
 
-var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY;
-var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY; 
-var S3_BUCKET = process.env.S3_BUCKET;
+var AWS_ACCESS_KEY = process.env.AWS_ACCESS_KEY || "xxxxx";
+var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY || "xxxxx";
+var S3_BUCKET = process.env.S3_BUCKET || "xxxxx";
 
 var uuid = require('node-uuid');
 
@@ -225,7 +225,6 @@ module.exports = function(app, passport, aws) {
         var mediaID = uuid.v1();
         // aws.config.update({accessKeyId: AWS_ACCESS_KEY, secretAccessKey: AWS_SECRET_KEY});
         var s3 = new aws.S3();
-        console.log(req.query);
         var s3_params = {
             Bucket: S3_BUCKET,
             Key: mediaID,
@@ -238,10 +237,10 @@ module.exports = function(app, passport, aws) {
                 console.log(err);
             }
             else{
-                var return_data = {
-                    signed_request: data,
-                    url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+mediaID
-                };
+                 var return_data = {
+                     signed_request: data,
+                     url: 'https://'+S3_BUCKET+'.s3.amazonaws.com/'+mediaID
+                 };
                 res.write(JSON.stringify(return_data));
                 res.end();
 
@@ -264,7 +263,7 @@ module.exports = function(app, passport, aws) {
                 });
 
                 // not properly redirecting
-                res.redirect("/capsule?id=" + capsuleURL[1]);
+                res.redirect("/profile");           
                 //
             }
         });
