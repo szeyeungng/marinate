@@ -52,12 +52,16 @@
   </div>
 </nav>
 
-<!-- Main content -->
+<!-- Title -->
 <div style="padding-left:20px;padding-top:20px" class="page-header">
-  <h4><%= capsule.capsuleName %>  <span class="badge"><%= entry.length %></span></h4>
-
+  <h4>
+    <%= capsule.capsuleName %>  
+    <span class="badge"><%= entry.length %></span>
+  </h4>
 </div>
-<p id="status"></p>
+
+<!-- Photo upload status -->
+<p style="margin-left:10px;margin-right:10px" id="status"></p>
 
 <% if (capsule.endDate < new Date()) {%>
   <% for(var i=0; i < entry.length; i++) { %>
@@ -223,7 +227,7 @@ function s3_upload(){
             status_elem.className = "alert alert-info";
         },
         onFinishS3Put: function(public_url) {
-            status_elem.innerHTML = 'Upload completed. Uploaded to: '+ public_url;
+            status_elem.innerHTML = 'Upload completed.';
             url_elem.value = public_url;
         },
         onError: function(status) {
