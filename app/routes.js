@@ -102,20 +102,6 @@ module.exports = function(app, passport, aws) {
                     else{
                         //console.log(entry);
                         res.render('capsule.html',{user:req.user, capsule:capsule, entry:entry});
-                        //console.log(entry);
-                        // Entry.aggregate(
-                        // {$match:{'capsuleID':req.query.id}},
-                        // {$group:{_id:'$author',entrySum:{$sum:1}}},
-                        // {$project:{_id:1,entrySum:1}},
-                        // function(err,aggregate){
-                        //     if (err){
-                        //         console.log("error grouping entries by author");
-                        //     }
-                        //     else{
-                        //         console.log(aggregate);
-                        //         res.render('capsule.html',{user:req.user, capsule:capsule, entry:entry, aggregate:aggregate});
-                        //     }
-                        // }) 
                     }
                 })
             }
@@ -272,13 +258,14 @@ module.exports = function(app, passport, aws) {
                 newEntry.save(function(err){
                     if(!err){
                         console.log("saved");
+                        res.redirect("/capsule?id=" + capsuleURL[1]);
                     } else {
                         console.log("could not save :(");
                     }
                 });
 
                 // not properly redirecting
-                res.redirect("/capsule?id=" + capsuleURL[1]);
+                
                 //
             }
         });
@@ -291,44 +278,6 @@ module.exports = function(app, passport, aws) {
         req.logout();
         res.redirect('/');
     });
-
-    // app.post('/newimage',function(req,res){
-    //     console.dir(req.files);
-
-    //     var newEntry = new Entry();
-
-    //     newEntry.date = new Date();
-    //     newEntry.capsuleID = req.body.capsuleID;
-    //     newEntry.author = req.user.email;
-    //     newEntry.image.data = fs.readFileSync(req.files.image.path);
-    //     newEntry.image.contentType = req.files.image.mimetype;
-
-    //     newEntry.save(function(err){
-    //         if(!err){
-    //             console.log("saved");
-    //         } else {
-    //             console.log("could not save :(");
-    //         }
-    //     });
-    //     res.redirect("/capsule?id=" + req.body.capsuleID);
-    // });
-
-    // app.get('/getimage', function (req, res) {
-    //     Entry.find(
-    //         {'image.contentType':{$exists:true}},
-    //         {'image.data':1,'image.contentType':1}).lean().exec(function (err, doc) {
-    //             if (err){
-    //                 console.log("error retrieving image.");
-    //             }
-    //             else {
-    //                 console.log(doc[0].image.data);
-    //                 console.log(doc[0].image.contentType);
-
-    //                 res.contentType(doc[0].image.contentType);
-    //                 res.send(doc[0].image.data.buffer);
-    //             }
-    //         });
-    //     });
 };
 
 // route middleware to make sure a user is logged in
