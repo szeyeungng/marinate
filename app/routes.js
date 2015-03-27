@@ -258,14 +258,13 @@ module.exports = function(app, passport, aws) {
                 newEntry.save(function(err){
                     if(!err){
                         console.log("saved");
-                        res.redirect("/capsule?id=" + capsuleURL[1]);
                     } else {
                         console.log("could not save :(");
                     }
                 });
 
                 // not properly redirecting
-                
+                res.redirect("/capsule?id=" + capsuleURL[1]);
                 //
             }
         });
