@@ -2,9 +2,10 @@
 // tools
 var express = require('express');
 var http = require('http');
-var aws = require('aws-sdk');
 var app = express();
-
+var aws = require('aws-sdk');
+// var test = aws.config.loadFromPath('./AwsConfig.json');
+// var test2 = aws.config.credentials = test
 var port = process.env.PORT || 8080;
 var mongoose = require('mongoose');
 var passport = require('passport');
@@ -18,10 +19,14 @@ var path = require('path');
 
 var multer = require('multer');
 
+
+
+
 // configuration =========================================
 var mongoURI = process.env.mongoURI || 'mongodb://szeyeungng:Password123!@ds029197.mongolab.com:29197/marinate';
 //var mongoURI = process.env.mongoURI;
 mongoose.connect(mongoURI);
+
 
 require('./config/passport')(passport); // pass passport for configuration
 
