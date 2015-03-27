@@ -220,6 +220,7 @@ function s3_upload(){
         s3_sign_put_url: '/sign_s3',
         onProgress: function(percent, message) {
             status_elem.innerHTML = 'Upload progress: ' + percent + '% ' + message;
+            status_elem.className = "alert alert-info";
         },
         onFinishS3Put: function(public_url) {
             status_elem.innerHTML = 'Upload completed. Uploaded to: '+ public_url;
