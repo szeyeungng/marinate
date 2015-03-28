@@ -91,8 +91,8 @@
   <h1><%= parseInt((Date.parse(capsule.endDate)-Date.now())/60000) %>min left</h1>
 
 <script>
-var width = 300,
-    height = 300,
+var width = $(window).width(),
+    height = $(window).width(),
     radius = Math.min(width, height) / 2;
 
 var color = d3.scale.ordinal()
