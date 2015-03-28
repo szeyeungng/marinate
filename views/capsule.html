@@ -55,8 +55,12 @@
 <!-- Title -->
 <div style="padding-left:20px;padding-top:20px" class="page-header">
   <h4>
-    <%= capsule.capsuleName %>  
-    <span class="badge"><%= entry.length %></span>
+    <%= capsule.capsuleName %> 
+    <% if (capsule.endDate > new Date()) {%> 
+      <span class="badge">
+        <%= parseInt((Date.parse(capsule.endDate)-Date.now())/60000) %>min left
+      </span>
+    <%}%>
   </h4>
 </div>
 
@@ -85,10 +89,6 @@
     <% } %>
   <% } %>
 <% } %>
-
-<% if (capsule.endDate > new Date()) {%>
-  <!-- Add Statistics -->
-  <h1><%= parseInt((Date.parse(capsule.endDate)-Date.now())/60000) %>min left</h1>
 
 <script>
 var width = $(window).width(),
@@ -150,7 +150,6 @@ d3.json("/getcapsule/<%= capsule._id%>" , function(error, data) {
       </div>
     </div>
   </form>
-<%}%>
 
 <!-- settings button -->
 <button style="position:fixed;bottom:10px;right:10px" type="button" class="btn btn-default" data-toggle="modal" data-target="#exampleModal">
